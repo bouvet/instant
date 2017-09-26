@@ -1,27 +1,67 @@
 # Instant
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
+Instant components for the second generation Angular framework.
 
-## Development server
+## Components
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### instant-grid
 
-## Code scaffolding
+To include this in your project, do the following:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+import { GridModule } from 'ng-instant';
 
-## Build
+@NgModule({
+  imports: [
+    GridModule
+  ]
+})
+export class YourModule { }
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```
 
-## Running unit tests
+To use it, do this:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+**HTML**
 
-## Running end-to-end tests
+```
+<instant-grid [dataSource]="data" (sortChange)="onSortChanged($event)" (filterChange)="onFilterChanged($event)">
+  <instant-column name="id" #idCol>
+    <ng-template #filter>
+      TEST
+    </ng-template>
+    <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
+  </instant-column>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  <instant-column name="name"></instant-column>
+</instant-grid>
+```
 
-## Further help
+**Typescript**
+```
+export class MyComponent {
+  data = new MyDataSource();
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  onSortChanged($event) {
+    console.log($event);
+  }
+
+  onFilterChanged($event) {
+    console.log($event);
+  }
+}
+
+export class MyDataSource extends DataSource<any> {
+  connect(): Observable<any> {
+    // Return an Observable for your data here
+    return Observable.of([
+      {id: 0, name: 'test'},
+      {id: 1, name: 'testing'},
+      {id: 2, name: 'test more'},
+      {id: 3, name: 'test again'},
+    ]);
+  }
+
+  disconnect() {}
+}
+```
