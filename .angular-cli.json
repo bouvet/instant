@@ -5,11 +5,9 @@
   },
   "apps": [
     {
-      "root": "src",
+      "root": "lib",
       "outDir": "dist",
       "assets": [
-        "assets",
-        "favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -17,9 +15,10 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "instant",
       "styles": [
-        "styles.css"
+        "styles.scss",
+        "../node_modules/font-awesome/scss/font-awesome.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -36,11 +35,11 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
+      "project": "lib/tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json",
+      "project": "lib/tsconfig.spec.json",
       "exclude": "**/node_modules/**"
     },
     {
@@ -54,7 +53,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }

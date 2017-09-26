@@ -1,0 +1,38 @@
+.flex {
+  display: flex;
+  align-items: center;
+}
+.flex-col {
+  flex: 1;
+}
+
+[role="columnheader"] {
+  position: relative;
+  .action {
+    > button {
+      visibility: none;
+    }
+    &:hover > button {
+      visibility: visible;
+    }
+    md-card {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      &.open {
+        display: block;
+      }
+      md-form-field {
+        width: 100%;
+      }
+    }
+  }
+}
+
+[role="row"] {
+  &:nth-child(even) {
+    background: rgba(0,0,0,0.02);
+  }
+}
+

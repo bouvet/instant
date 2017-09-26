@@ -1,0 +1,10 @@
+<instant-grid [dataSource]="data" (sortChange)="onSortChanged($event)" (filterChange)="onFilterChanged($event)">
+  <instant-column name="id" #idCol>
+    <ng-template #filter>
+      TEST
+    </ng-template>
+    <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
+  </instant-column>
+
+  <instant-column name="name"></instant-column>
+</instant-grid>
