@@ -1,7 +1,14 @@
 [role="columnheader"] {
-  position: relative;
+  header {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
   &:hover .action > button {
     visibility: visible;
+  }
+  [role="heading"] {
+    flex: 1;
   }
   .action {
     > button {
@@ -22,9 +29,10 @@
   }
 }
 
-[role="row"] {
-  &:nth-child(even) {
-    background: rgba(0,0,0,0.02);
+:host.striped {
+  [role="row"] {
+    &:nth-child(even) {
+      background: rgba(0,0,0,0.02);
+    }
   }
 }
-

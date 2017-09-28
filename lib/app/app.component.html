@@ -1,11 +1,15 @@
-<instant-grid-toolbar title="My Grid" [page]="currentPage" [pageSize]="pageSize" (pageChange)="onPage($event)" [total]="total"></instant-grid-toolbar>
-<instant-grid [dataSource]="data">
+<instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" (pageChange)="onPage($event)" [total]="total">
+  My Grid
+</instant-grid-toolbar>
+<instant-grid [dataSource]="data" class="striped">
   <instant-column name="id" #idCol>
-    <ng-template #filter>
+    <ng-template #filter let-col="col">
       TEST
     </ng-template>
     <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
   </instant-column>
 
   <instant-column name="name"></instant-column>
+  <instant-column name="type"></instant-column>
+  <instant-column name="uuid"></instant-column>
 </instant-grid>

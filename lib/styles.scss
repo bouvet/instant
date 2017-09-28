@@ -1,11 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-.flex {
-  display: flex;
-  align-items: center;
-}
-.flex-col {
-  flex: 1;
-}
 
+// https://github.com/angular/material2/issues/6058#issuecomment-318612278
+.mat-table {
+  display: table !important;
+  width: 100%;
+  >.mat-header-row,
+  >.mat-row {
+    display: table-row;
+    padding: 0;
+    border: none;
+    >.mat-header-cell,
+    >.mat-cell {
+      display: table-cell;
+      height: 48px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+}

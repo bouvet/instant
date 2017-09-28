@@ -7,7 +7,6 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./grid-toolbar.component.scss']
 })
 export class GridToolbarComponent implements OnInit {
-  @Input() title: string;
   @Input() page = 0;
   @Output() pageChange = new EventEmitter<PageEvent>();
   @Input() total = 0;

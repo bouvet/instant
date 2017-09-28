@@ -1,29 +1,31 @@
 <md-table #table [dataSource]="dataSource" mdSort>
   <ng-container *ngFor="let col of columns" [mdColumnDef]="col.name">
     <!-- Header definition -->
-    <md-header-cell *mdHeaderCellDef class="flex">
-      <div md-sort-header class="flex-col">
-        {{ col.label }}
-      </div>
-      <div class="action">
-        <button md-icon-button (click)="col.filterOpen = !col.filterOpen">
-          <i class="fa fa-fw fa-filter"></i>
-        </button>
-        <md-card [ngClass]="{open: col.filterOpen}">
-          <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
-            <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
-          </ng-container>
+    <md-header-cell *mdHeaderCellDef>
+      <header>
+        <div md-sort-header class="flex-col" role="heading">
+          {{ col.label }}
+        </div>
+        <div class="action">
+          <button md-icon-button (click)="col.filterOpen = !col.filterOpen">
+            <i class="fa fa-fw fa-filter"></i>
+          </button>
+          <md-card [ngClass]="{open: col.filterOpen}">
+            <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
+              <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
+            </ng-container>
 
-          <ng-template #defaultFilterTemplate>
-            <md-form-field>
-              <input mdInput placeholder="Filter" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
-              <button md-icon-button mdSuffix (click)="col.setFilter(undefined)">
-                <i class="fa fa-times fa-fw"></i>
-              </button>
-            </md-form-field>
-          </ng-template>
-        </md-card>
-      </div>
+            <ng-template #defaultFilterTemplate>
+              <md-form-field>
+                <input mdInput placeholder="Filter" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
+                <button md-icon-button mdSuffix (click)="col.setFilter(undefined)">
+                  <i class="fa fa-times fa-fw"></i>
+                </button>
+              </md-form-field>
+            </ng-template>
+          </md-card>
+        </div>
+      </header>
     </md-header-cell>
 
     <!-- Cell definition -->

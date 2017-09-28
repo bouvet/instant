@@ -47,10 +47,10 @@ export class InstantDataSource<T> extends DataSource<T> {
  */
 export abstract class InstantDatabase<T> {
   sortChange: EventEmitter<Sort>;
-  sortCache: Sorter = {};
+  private sortCache: Sorter = {};
 
   filterChange: Observable<ColumnFilter> = new BehaviorSubject(null);
-  filterCache: Filter = {};
+  private filterCache: Filter = {};
 
   dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 
