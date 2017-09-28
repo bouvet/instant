@@ -1,6 +1,13 @@
 import { Input, Directive, TemplateRef, ContentChild, OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { FilterOption } from './datasource';
+
+/**
+ *
+ */
+export interface ColumnFilter {
+  active: string;
+  filter: any;
+}
 
 /**
  * Column definition for the instant-grid.
@@ -21,7 +28,7 @@ export class ColumnDirective implements OnInit {
 
   // Filter properties
   filterOpen: boolean;
-  filter = new ReplaySubject<FilterOption>();
+  filter = new ReplaySubject<ColumnFilter>();
   filterValue: any;
   private oldFilter: any;
 

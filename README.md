@@ -39,11 +39,11 @@ To use it, do this:
 
 **Typescript**
 ```
-import { InstantDataSource, InstantDatabase, FilterOption } from 'instant';
+import { InstantDataSource, InstantDatabase, Sorter, Filter } from 'instant';
 
 export class MyComponent {
   data = new InstantDataSource(new class extends InstantDatabase<any> {
-    onRead (sort?: Sort, filter?: FilterOption) {
+    onRead (sort?: Sorter, filter?: Filter) {
       // Read in data somehow, and call dataChange.next with the results
       this.dataChange.next([
         {id: 0, name: 'test'},

@@ -3,8 +3,8 @@ import { MdSort, Sort } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/add/operator/merge';
 
-import { FilterOption, InstantDatabase, InstantDataSource } from './datasource';
-import { ColumnDirective } from './column.directive';
+import { InstantDatabase, InstantDataSource } from './datasource';
+import { ColumnFilter, ColumnDirective } from './column.directive';
 
 @Component({
   selector: 'instant-grid',

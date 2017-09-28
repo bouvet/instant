@@ -5,13 +5,7 @@ import { Sort, MdSort } from '@angular/material';
 import { Observable, Subject } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/merge';
-/**
- *
- */
-export interface FilterOption {
-  active: string;
-  filter: any;
-}
+import { ColumnFilter } from './column.directive';
 
 export interface ChangeEvent {
   [event: string]: {
@@ -19,6 +13,14 @@ export interface ChangeEvent {
     direction?: 'asc' | 'desc' | '',
     filter?: any
   };
+}
+
+export interface Filter {
+  [col: string]: any;
+}
+
+export interface Sorter {
+  [col: string]: 'asc' | 'desc' | '';
 }
 
 /**
@@ -45,36 +47,34 @@ export class InstantDataSource<T> extends DataSource<T> {
  */
 export abstract class InstantDatabase<T> {
   sortChange: EventEmitter<Sort>;
-  filterChange: Observable<FilterOption> = new BehaviorSubject(null);
+  sortCache: Sorter = {};
+
+  filterChange: Observable<ColumnFilter> = new BehaviorSubject(null);
+  filterCache: Filter = {};
 
   dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 
   onInit() {
     this.onRead();
   }
-  onRead(sort?: Sort, filter?: FilterOption) {}
+  onRead(sort?: Sorter, filter?: Filter) {}
 
   _configure(args: Partial<InstantDatabase<T>>) {
     Object.assign(this, args);
 
     // On any changes, read data
-    let sort; let filter;
-    this.onClientChange().subscribe(result => {
-      sort   = result.sort   || sort;   // Cache previous value
-      filter = result.filter || filter; // Cache previous value
-      this.onRead(sort, filter);
+    this.sortChange.subscribe(sort => {
+      this.sortCache = {}; // Reset always. Multiple column sort is NOT supported
+      this.sortCache[sort.active] = sort.direction;
+      this.onRead(this.sortCache, this.filterCache);
+    });
+    this.filterChange.subscribe(filter => {
+      this.filterCache[filter.active] = filter.filter;
+      this.onRead(this.sortCache, this.filterCache);
     });
 
     // Attached to a grid. Run init
     if (this.onInit) { this.onInit(); }
-  }
-
-
-  onClientChange(): Observable<ChangeEvent> {
-    return Observable.merge(
-      this.sortChange.distinctUntilChanged().map(s => ({sort: s})),
-      this.filterChange.distinctUntilChanged().map(f => ({filter: f}))
-    );
   }
 }
 

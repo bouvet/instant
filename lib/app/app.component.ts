@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { Sort } from '@angular/material';
 import 'rxjs/add/observable/of';
-import { InstantDataSource, InstantDatabase, FilterOption } from './grid';
+import { InstantDataSource, InstantDatabase } from './grid';
+import { Sorter, Filter } from './grid/datasource';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { InstantDataSource, InstantDatabase, FilterOption } from './grid';
 })
 export class AppComponent implements OnInit {
   data = new InstantDataSource(new class extends InstantDatabase<any> {
-    onRead (sort?: Sort, filter?: FilterOption) {
+    onRead (sort?: Sorter, filter?: Filter) {
+      console.log(sort, filter);
       this.dataChange.next([
         {id: 0, name: 'test'},
         {id: 1, name: 'tester'},
