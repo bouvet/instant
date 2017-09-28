@@ -1,3 +1,4 @@
+<instant-grid-toolbar title="My Grid" [page]="currentPage" [pageSize]="pageSize" (pageChange)="onPage($event)" [total]="total"></instant-grid-toolbar>
 <instant-grid [dataSource]="data">
   <instant-column name="id" #idCol>
     <ng-template #filter>

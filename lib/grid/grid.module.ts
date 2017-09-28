@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdTableModule, MdSortModule, MdInputModule, MdCardModule, MdButtonModule } from '@angular/material';
+import {
+  MdTableModule, MdSortModule, MdInputModule, MdCardModule, MdButtonModule, MdToolbarModule, MdPaginatorModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { GridComponent } from './grid.component';
 import { ColumnDirective } from './column.directive';
 import { FormsModule } from '@angular/forms';
-// import { InstantDatabaseFactory } from './datasource.factory';
+import { GridToolbarComponent } from './toolbar/grid-toolbar.component';
 
 @NgModule({
   imports: [
@@ -17,18 +19,19 @@ import { FormsModule } from '@angular/forms';
     MdInputModule,
     MdCardModule,
     MdButtonModule,
+    MdToolbarModule,
+    MdPaginatorModule,
     FormsModule
   ],
   declarations: [
     GridComponent,
-    ColumnDirective
+    ColumnDirective,
+    GridToolbarComponent
   ],
   exports: [
     GridComponent,
-    ColumnDirective
-  ],
-  // providers: [
-  //   InstantDatabaseFactory
-  // ]
+    ColumnDirective,
+    GridToolbarComponent
+  ]
 })
 export class GridModule { }

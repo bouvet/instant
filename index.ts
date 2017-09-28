@@ -1,1 +1,1 @@
-export * from './lib/app/grid';
+export * from './lib/grid';

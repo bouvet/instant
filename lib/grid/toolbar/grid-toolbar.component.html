@@ -1,0 +1,4 @@
+<md-toolbar>
+  <header class="flex-col">{{ title }}</header>
+  <md-paginator [length]="total" [pageSize]="pageSize" (page)="pageHandler($event)" [pageSizeOptions]="pageSizeOptions"> </md-paginator>
+</md-toolbar>
