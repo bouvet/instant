@@ -8,12 +8,12 @@
 
 [role="columnheader"] {
   position: relative;
+  &:hover .action > button {
+    visibility: visible;
+  }
   .action {
     > button {
-      visibility: none;
-    }
-    &:hover > button {
-      visibility: visible;
+      visibility: hidden;
     }
     md-card {
       display: none;

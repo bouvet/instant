@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { GridModule } from './grid/grid.module';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { GridModule } from './grid/grid.module';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     GridModule
   ],
   providers: [],

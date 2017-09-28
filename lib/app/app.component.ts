@@ -1,34 +1,29 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Rx';
+import { Http } from '@angular/http';
+import { Sort } from '@angular/material';
+import 'rxjs/add/observable/of';
+import { InstantDataSource, InstantDatabase, FilterOption } from './grid';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  data = new AppDataSource();
+export class AppComponent implements OnInit {
+  data = new InstantDataSource(new class extends InstantDatabase<any> {
+    onRead (sort?: Sort, filter?: FilterOption) {
+      this.dataChange.next([
+        {id: 0, name: 'test'},
+        {id: 1, name: 'tester'},
+        {id: 2, name: 'test igjen'},
+        {id: 3, name: 'ny test'},
+      ]);
+    }
+  });
 
-  onSortChanged($event) {
-    console.log($event);
-  }
+  constructor() {  }
 
-  onFilterChanged($event) {
-    console.log($event);
-  }
-}
-
-export class AppDataSource extends DataSource<any> {
-  connect(): Observable<any> {
-    return Observable.of([
-      {id: 0, name: 'test'},
-      {id: 1, name: 'testing'},
-      {id: 2, name: 'test more'},
-      {id: 3, name: 'test again'},
-    ]);
-  }
-
-  disconnect() {}
+  ngOnInit() {  }
 }

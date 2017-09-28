@@ -9,7 +9,7 @@ Instant components for the second generation Angular framework.
 To include this in your project, do the following:
 
 ```
-import { GridModule } from 'ng-instant';
+import { GridModule } from 'instant';
 
 @NgModule({
   imports: [
@@ -25,10 +25,10 @@ To use it, do this:
 **HTML**
 
 ```
-<instant-grid [dataSource]="data" (sortChange)="onSortChanged($event)" (filterChange)="onFilterChanged($event)">
-  <instant-column name="id" #idCol>
+<instant-grid [dataSource]="data">
+  <instant-column name="id" #idCol label="Id field | translate">
     <ng-template #filter>
-      TEST
+      Your custom filter template
     </ng-template>
     <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
   </instant-column>
@@ -39,29 +39,19 @@ To use it, do this:
 
 **Typescript**
 ```
+import { InstantDataSource, InstantDatabase, FilterOption } from 'instant';
+
 export class MyComponent {
-  data = new MyDataSource();
-
-  onSortChanged($event) {
-    console.log($event);
-  }
-
-  onFilterChanged($event) {
-    console.log($event);
-  }
-}
-
-export class MyDataSource extends DataSource<any> {
-  connect(): Observable<any> {
-    // Return an Observable for your data here
-    return Observable.of([
-      {id: 0, name: 'test'},
-      {id: 1, name: 'testing'},
-      {id: 2, name: 'test more'},
-      {id: 3, name: 'test again'},
-    ]);
-  }
-
-  disconnect() {}
+  data = new InstantDataSource(new class extends InstantDatabase<any> {
+    onRead (sort?: Sort, filter?: FilterOption) {
+      // Read in data somehow, and call dataChange.next with the results
+      this.dataChange.next([
+        {id: 0, name: 'test'},
+        {id: 1, name: 'tester'},
+        {id: 2, name: 'test igjen'},
+        {id: 3, name: 'ny test'},
+      ]);
+    }
+  });
 }
 ```

@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GridComponent } from './grid.component';
 import { ColumnDirective } from './column.directive';
 import { FormsModule } from '@angular/forms';
+// import { InstantDatabaseFactory } from './datasource.factory';
 
 @NgModule({
   imports: [
@@ -25,6 +26,9 @@ import { FormsModule } from '@angular/forms';
   exports: [
     GridComponent,
     ColumnDirective
-  ]
+  ],
+  // providers: [
+  //   InstantDatabaseFactory
+  // ]
 })
 export class GridModule { }
