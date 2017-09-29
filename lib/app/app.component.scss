@@ -1,5 +1,8 @@
 ::ng-deep [role="gridcell"] {
-  position: relative;
+  &:last-child {
+    position: relative;
+    width: 15px;
+  }
 }
 md-card {
   position: absolute;
