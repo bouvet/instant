@@ -12,4 +12,12 @@
   <instant-column name="name"></instant-column>
   <instant-column name="type"></instant-column>
   <instant-column name="uuid"></instant-column>
+  <instant-column name="actions" label="" [filterable]="false" [sortable]="false">
+    <ng-template #cell let-row="row" let-col="col">
+      <button md-icon-button (click)="row.showMenu = !row.showMenu"><i class="fa fa-fw fa-ellipsis-v"></i></button>
+      <md-card *ngIf="row.showMenu">
+        Test
+      </md-card>
+    </ng-template>
+  </instant-column>
 </instant-grid>

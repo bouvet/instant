@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { GridModule } from '../grid';
 import { HttpModule } from '@angular/http';
+import { MdButtonModule, MdCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,8 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     HttpModule,
+    MdButtonModule,
+    MdCardModule,
     GridModule
   ],
   providers: [],

@@ -21,6 +21,8 @@ export class ColumnDirective implements OnInit {
   // Inputs
   @Input() name: string;  // Unique identifier for this column.
   @Input() label: string; // Defaults to the identifier of column
+  @Input() filterable = true;
+  @Input() sortable = true;
 
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
@@ -38,7 +40,7 @@ export class ColumnDirective implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (!this.label) {
+    if (this.label == null) {
       this.label = this.name;
     }
   }
