@@ -3,13 +3,13 @@
     <!-- Header definition -->
     <md-header-cell *mdHeaderCellDef>
       <header>
-        <div md-sort-header class="flex-col" role="heading" *ngIf="col.sortable">
+        <div md-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
           {{ col.label }}
         </div>
-        <div class="flex-col" role="heading" *ngIf="!col.sortable">
+        <div class="flex-col" role="heading" *ngIf="col.sortable == false">
           {{ col.label }}
         </div>
-        <div class="action" *ngIf="col.hasFilter">
+        <div class="action" *ngIf="col.filterable != false">
           <button md-icon-button (click)="col.filterOpen = !col.filterOpen">
             <i class="fa fa-fw fa-filter"></i>
           </button>
