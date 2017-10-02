@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/merge';
 import { ColumnFilter } from './column.directive';
+import { Subscription } from 'rxjs/Subscription';
 
 export interface ChangeEvent {
   [event: string]: {
@@ -35,7 +36,9 @@ export class InstantDataSource<T> extends DataSource<T> {
   connect(): Observable<T[]> {
     return this.db.dataChange;
   }
-  disconnect() {}
+  disconnect() {
+    this.db.onDestroy();
+  }
 }
 
 /**
@@ -48,14 +51,24 @@ export class InstantDataSource<T> extends DataSource<T> {
 export abstract class InstantDatabase<T> {
   sortChange: EventEmitter<Sort>;
   private sortCache: Sorter = {};
+  private _sortSubscriber: Subscription;
 
   filterChange: Observable<ColumnFilter> = new BehaviorSubject(null);
   private filterCache: Filter = {};
+  private _filterSubscriber: Subscription;
 
   dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
+  dataSnapshot;
+  private _dataChangeSubscriber: Subscription;
 
   onInit() {
     this.onRead();
+    this._dataChangeSubscriber = this.dataChange.subscribe(data => this.dataSnapshot = data);
+  }
+  onDestroy() {
+    this._dataChangeSubscriber.unsubscribe();
+    this._sortSubscriber.unsubscribe();
+    this._filterSubscriber.unsubscribe();
   }
   onRead(sort?: Sorter, filter?: Filter) {}
 
@@ -63,12 +76,12 @@ export abstract class InstantDatabase<T> {
     Object.assign(this, args);
 
     // On any changes, read data
-    this.sortChange.subscribe(sort => {
+    this._sortSubscriber = this.sortChange.subscribe(sort => {
       this.sortCache = {}; // Reset always. Multiple column sort is NOT supported
       this.sortCache[sort.active] = sort.direction;
       this.onRead(this.sortCache, this.filterCache);
     });
-    this.filterChange.subscribe(filter => {
+    this._filterSubscriber = this.filterChange.subscribe(filter => {
       this.filterCache[filter.active] = filter.filter;
       this.onRead(this.sortCache, this.filterCache);
     });

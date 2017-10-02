@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { DataSource } from '@angular/cdk/collections';
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   filter: Filter;
   data: InstantDataSource<any>;
 
-  constructor(private paginatorIntl: MdPaginatorIntl) {  }
+  constructor(private paginatorIntl: MdPaginatorIntl, private elRef: ElementRef) {  }
 
   ngOnInit() {
     // Translations
@@ -65,5 +65,19 @@ export class AppComponent implements OnInit {
       this.total = data.length;
       this.data.db.dataChange.next(data);
     });
+  }
+
+  @HostListener('click', ['$event'])
+  onClick($event) {
+    // Find all header cells
+    [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))
+      // Filter away current target
+      .filter(b => !b.contains($event.target))
+      // If any row action (not including current target) is marked as open, close it.
+      .forEach(cell => {
+        const row = cell.closest('md-row');
+        const index = [].slice.call(row.closest('md-table').children).indexOf(row) - 1; // - 1 because header is also a child.
+        this.data.db.dataSnapshot[index].showMenu = false; // Find row object in database snapshot, and mark it closed.
+      });
   }
 }

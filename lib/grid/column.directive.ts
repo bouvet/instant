@@ -1,4 +1,4 @@
-import { Input, Directive, TemplateRef, ContentChild, OnInit } from '@angular/core';
+import { Input, Directive, TemplateRef, ContentChild, OnInit, ViewChild } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 /**
@@ -27,6 +27,7 @@ export class ColumnDirective implements OnInit {
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
   @ContentChild('cell') cellRef: TemplateRef<any>;
+
 
   // Filter properties
   filterOpen: boolean;

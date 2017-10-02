@@ -143,6 +143,25 @@ A row menu can be acheived by specifying a column to be non-sortable and non-fil
 </instant-grid>
 ```
 
+Add this to your controller
+```ts
+  constructor(private elRef: ElementRef) {  }
+
+  @HostListener('click', ['$event'])
+  onClick($event) {
+    // Find all header cells
+    [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))
+      // Filter away current target
+      .filter(b => !b.contains($event.target))
+      // If any row action (not including current target) is marked as open, close it.
+      .forEach(cell => {
+        const row = cell.closest('md-row');
+        const index = [].slice.call(row.closest('md-table').children).indexOf(row) - 1; // - 1 because header is also a child.
+        this.data.db.dataSnapshot[index].showMenu = false; // Find row object in database snapshot, and mark it closed.
+      });
+  }
+```
+
 ```scss
 ::ng-deep [role="gridcell"] {
   position: relative;
