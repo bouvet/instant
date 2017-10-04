@@ -7,7 +7,7 @@ import { Sort, PageEvent, MdPaginatorIntl } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/of';
 
-import { InstantDataSource, InstantDatabase, Sorter, Filter } from '../grid';
+import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from '../grid';
 
 @Component({
   selector: 'app-root',
@@ -39,8 +39,7 @@ export class AppComponent implements OnInit {
     const me = this;
     this.data = new InstantDataSource(new class extends InstantDatabase<any> {
       onRead (sort?: Sorter, filter?: Filter) {
-        me.sort = sort;
-        me.filter = filter;
+        me.sort = sort; me.filter = filter;
         me.loadData();
       }
     });
@@ -66,6 +65,11 @@ export class AppComponent implements OnInit {
       this.data.db.dataChange.next(data);
     });
   }
+
+  rowClicked(row: RowClickEvent) {
+    console.log('From col: ', row.colName, row.data);
+  }
+
 
   @HostListener('click', ['$event'])
   onClick($event) {

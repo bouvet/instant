@@ -1,5 +1,6 @@
 import {
-  Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener, ElementRef, QueryList, ViewChildren
+  Component, Input, ViewChildren, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
+  ElementRef, QueryList, EventEmitter, Output
 } from '@angular/core';
 import { MdSort, Sort } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -8,6 +9,10 @@ import 'rxjs/add/operator/merge';
 import { InstantDatabase, InstantDataSource } from './datasource';
 import { ColumnFilter, ColumnDirective } from './column.directive';
 
+export interface RowClickEvent {
+  data: any;
+  colName: string;
+}
 @Component({
   selector: 'instant-grid',
   templateUrl: './grid.component.html',
@@ -16,6 +21,7 @@ import { ColumnFilter, ColumnDirective } from './column.directive';
 export class GridComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: InstantDataSource<any>;
   @ContentChildren(ColumnDirective) columns: ColumnDirective[];
+  @Output() rowClicked = new EventEmitter<RowClickEvent>();
   @ViewChild(MdSort) sort: MdSort;
 
   _displayedColumns: string[];
@@ -43,7 +49,15 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     }
   }
 
-  @HostListener('click', ['$event'])
+  onRowClicked(row, $event) {
+    const cellName = [].slice.call($event.target.closest('md-cell').classList)
+      .find(c => c.indexOf('mat-column-') > -1)
+      .substr('mat-column-'.length);
+
+    this.rowClicked.emit({data: row, colName: cellName});
+  }
+
+  @HostListener('window.click', ['$event'])
   onClick($event) {
     const headersToClose: string[] = [].slice
       // Find all header cells

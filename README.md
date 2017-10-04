@@ -25,7 +25,7 @@ To use it, do this:
 **HTML**
 
 ```html
-<instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" (pageChange)="onPage($event)" [total]="total">
+<instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" [total]="total" (pageChange)="onPage($event)" (rowClick)="rowClicked($event)">
   My Grid header, or anything else you want up here.
 </instant-grid-toolbar>
 <instant-grid [dataSource]="data" class="striped">
@@ -47,7 +47,7 @@ To use it, do this:
 
 **Typescript**
 ```ts
-import { InstantDataSource, InstantDatabase, Sorter, Filter } from 'instant';
+import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from 'instant';
 
 export class AppComponent implements OnInit {
   currentPage = 0;
@@ -57,15 +57,14 @@ export class AppComponent implements OnInit {
   filter: Filter;
   data: InstantDataSource<any>;
 
-  constructor() {  }
+  constructor(private backendService: MyService) {  }
 
   ngOnInit() {
     // Data provider
     const me = this;
     this.data = new InstantDataSource(new class extends InstantDatabase<any> {
       onRead (sort?: Sorter, filter?: Filter) {
-        me.sort = sort;
-        me.filter = filter;
+        me.sort = sort; me.filter = filter;
         me.loadData();
       }
     });
@@ -77,18 +76,17 @@ export class AppComponent implements OnInit {
     this.loadData();
   }
 
+  rowClicked(row: RowClickEvent) {
+    console.log('From col: ', row.colName, row.data);
+  }
+
   loadData() {
-    // Load data
-    const data = [
-      {id: 0, name: 'test',       type: 'SOMETHING', uuid: 'a0988-bfc865-a8cf89-fdc87cc'},
-      {id: 1, name: 'tester',     type: 'ANYTHING',  uuid: 'a0988-bfc865-a8cf89-fdc87cc'},
-      {id: 2, name: 'test igjen', type: 'WHAT?',     uuid: 'a0988-bfc865-a8cf89-fdc87cc'},
-      {id: 3, name: 'ny test',    type: 'NOTHING',   uuid: 'a0988-bfc865-a8cf89-fdc87cc'},
-    ];
-    setTimeout(() => {
-      // setTimeout in order to avoid ExpressionChangedAfterItHasBeenCheckedError
-      this.total = data.length;
-      this.data.db.dataChange.next(data);
+    this.backendService.loadData().subscribe(data => {
+      setTimeout(() => {
+        // setTimeout in order to avoid ExpressionChangedAfterItHasBeenCheckedError
+        this.total = data.length;
+        this.data.db.dataChange.next(data); // Set data back to grid
+      });
     });
   }
 }
