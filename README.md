@@ -25,10 +25,10 @@ To use it, do this:
 **HTML**
 
 ```html
-<instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" [total]="total" (pageChange)="onPage($event)" (rowClick)="rowClicked($event)">
+<instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" [total]="total" (pageChange)="onPage($event)">
   My Grid header, or anything else you want up here.
 </instant-grid-toolbar>
-<instant-grid [dataSource]="data" class="striped">
+<instant-grid [dataSource]="data" class="striped" (rowClick)="rowClicked($event)">
   <instant-column name="id" #idCol>
     <!-- Custom filter -->
     <ng-template #filter let-col="col">
