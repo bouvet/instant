@@ -57,7 +57,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     this.rowClicked.emit({data: row, colName: cellName});
   }
 
-  @HostListener('window.click', ['$event'])
+  @HostListener('document:click', ['$event'])
   onClick($event) {
     const headersToClose: string[] = [].slice
       // Find all header cells

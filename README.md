@@ -145,7 +145,7 @@ Add this to your controller
 ```ts
   constructor(private elRef: ElementRef) {  }
 
-  @HostListener('click', ['$event'])
+  @HostListener('document:click', ['$event'])
   onClick($event) {
     // Find all header cells
     [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))

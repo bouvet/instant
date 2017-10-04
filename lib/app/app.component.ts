@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  @HostListener('click', ['$event'])
+  @HostListener('document:click', ['$event'])
   onClick($event) {
     // Find all header cells
     [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))
