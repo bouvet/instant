@@ -6,6 +6,7 @@
   "apps": [
     {
       "root": "lib",
+      "name": "demo",
       "outDir": "dist",
       "assets": [
       ],

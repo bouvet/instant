@@ -1,20 +1,15 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { Http } from '@angular/http';
-
-import { DataSource } from '@angular/cdk/collections';
+import { Component, OnInit } from '@angular/core';
 import { Sort, PageEvent, MdPaginatorIntl } from '@angular/material';
 
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/observable/of';
-
-import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from '../grid';
+import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from '../../grid';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'instant-demo-grid',
+  templateUrl: './demo-grid.component.html',
+  styleUrls: ['./demo-grid.component.scss']
 })
-export class AppComponent implements OnInit {
+export class DemoGridComponent implements OnInit {
   currentPage = 0;
   pageSize = 10;
   total = 0;
@@ -22,7 +17,7 @@ export class AppComponent implements OnInit {
   filter: Filter;
   data: InstantDataSource<any>;
 
-  constructor(private paginatorIntl: MdPaginatorIntl, private elRef: ElementRef) {  }
+  constructor(private paginatorIntl: MdPaginatorIntl, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     // Translations
@@ -68,20 +63,6 @@ export class AppComponent implements OnInit {
 
   rowClicked(row: RowClickEvent) {
     console.log('From col: ', row.colName, row.data);
-  }
-
-
-  @HostListener('document:click', ['$event'])
-  onClick($event) {
-    // Find all header cells
-    [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))
-      // Filter away current target
-      .filter(b => !b.contains($event.target))
-      // If any row action (not including current target) is marked as open, close it.
-      .forEach(cell => {
-        const row = cell.closest('md-row');
-        const index = [].slice.call(row.closest('md-table').children).indexOf(row) - 1; // - 1 because header is also a child.
-        this.data.db.dataSnapshot[index].showMenu = false; // Find row object in database snapshot, and mark it closed.
-      });
+    this.router.navigate([row.colName], {relativeTo: this.route});
   }
 }

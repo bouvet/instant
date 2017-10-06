@@ -92,32 +92,6 @@ export class AppComponent implements OnInit {
 }
 ```
 
-**SCSS**
-
-If your grid contains a lot of data, you might experience a column shift bug. This is a registerred bug and there exists a workaround for it.
-Include the following scss in your styles:
-
-```scss
-// https://github.com/angular/material2/issues/6058#issuecomment-318612278
-.mat-table {
-  display: table !important;
-  width: 100%;
-  >.mat-header-row,
-  >.mat-row {
-    display: table-row;
-    padding: 0;
-    border: none;
-    >.mat-header-cell,
-    >.mat-cell {
-      display: table-cell;
-      height: 48px;
-      vertical-align: middle;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    }
-  }
-}
-```
-
 ### Row menu
 
 A row menu can be acheived by specifying a column to be non-sortable and non-filterable, and giving in a custom cell renderer.
@@ -125,48 +99,13 @@ A row menu can be acheived by specifying a column to be non-sortable and non-fil
 **Example**
 
 ```html
-<instant-grid [dataSource]="data" class="striped">
-  <instant-column name="name"></instant-column>
-  <instant-column name="type"></instant-column>
-  <instant-column name="uuid"></instant-column>
   <instant-column name="actions" label="" [filterable]="false" [sortable]="false">
     <!-- Custom cell renderer -->
     <ng-template #cell let-row="row" let-col="col">
-      <button md-icon-button (click)="row.showMenu = !row.showMenu"><i class="fa fa-fw fa-ellipsis-v"></i></button>
-      <md-card *ngIf="row.showMenu">
+      <instant-grid-row-menu [row]="row">
         Your menu here!
-      </md-card>
+      </instant-grid-row-menu>
     </ng-template>
   </instant-column>
-</instant-grid>
 ```
 
-Add this to your controller
-```ts
-  constructor(private elRef: ElementRef) {  }
-
-  @HostListener('document:click', ['$event'])
-  onClick($event) {
-    // Find all header cells
-    [].slice.call(this.elRef.nativeElement.querySelectorAll('md-cell.mat-column-actions'))
-      // Filter away current target
-      .filter(b => !b.contains($event.target))
-      // If any row action (not including current target) is marked as open, close it.
-      .forEach(cell => {
-        const row = cell.closest('md-row');
-        const index = [].slice.call(row.closest('md-table').children).indexOf(row) - 1; // - 1 because header is also a child.
-        this.data.db.dataSnapshot[index].showMenu = false; // Find row object in database snapshot, and mark it closed.
-      });
-  }
-```
-
-```scss
-::ng-deep [role="gridcell"] {
-  position: relative;
-}
-md-card {
-  position: absolute;
-  z-index: 100;
-  right: 0;
-}
-```

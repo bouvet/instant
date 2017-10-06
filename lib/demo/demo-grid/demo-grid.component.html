@@ -1,11 +1,14 @@
+<!-- Grid toolbar -->
 <instant-grid-toolbar [page]="currentPage" [pageSize]="pageSize" (pageChange)="onPage($event)" [total]="total">
-  My Grid
+  My Grid Header
 </instant-grid-toolbar>
 
+<!-- Grid definition -->
 <instant-grid [dataSource]="data" class="striped" (rowClicked)="rowClicked($event)">
   <instant-column name="id" #idCol>
+    <!-- Custom filter -->
     <ng-template #filter let-col="col">
-      TEST
+      Custom Filter Test
     </ng-template>
     <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
   </instant-column>
@@ -14,11 +17,11 @@
   <instant-column name="type"></instant-column>
   <instant-column name="uuid"></instant-column>
   <instant-column name="actions" label="" [filterable]="false" [sortable]="false">
+    <!-- Custom cell renderer -->
     <ng-template #cell let-row="row" let-col="col">
-      <button md-icon-button (click)="row.showMenu = !row.showMenu"><i class="fa fa-fw fa-ellipsis-v"></i></button>
-      <md-card *ngIf="row.showMenu">
-        Test
-      </md-card>
+      <instant-grid-row-menu [row]="row">
+        Custom row menu test
+      </instant-grid-row-menu>
     </ng-template>
   </instant-column>
 </instant-grid>

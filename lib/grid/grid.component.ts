@@ -32,7 +32,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
   private filterSubscriptions: Subscription[];
 
-  constructor(private elRef: ElementRef) { }
+  constructor(public elRef: ElementRef) { }
 
   ngAfterContentInit() {
     if (this.columns && this.columns.length) {
