@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ToolbarComponent } from './toolbar.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FormActionsComponent } from './form-actions/form-actions.component';
+import { FormActionsDefDirective } from './form-actions/form-actions-def.directive';
 import { ToolbarService } from './toolbar.service';
 
 @NgModule({
@@ -12,8 +13,8 @@ import { ToolbarService } from './toolbar.service';
     CommonModule,
     RouterModule
   ],
-  declarations: [ToolbarComponent, BreadcrumbComponent, FormActionsComponent],
-  exports: [ToolbarComponent, BreadcrumbComponent, FormActionsComponent],
+  declarations: [ToolbarComponent, BreadcrumbComponent, FormActionsComponent, FormActionsDefDirective],
+  exports: [ToolbarComponent, BreadcrumbComponent, FormActionsComponent, FormActionsDefDirective],
   providers: [ToolbarService]
 })
 export class ToolbarModule { }

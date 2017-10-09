@@ -2,9 +2,10 @@
 <form [formGroup]="form">
 
   <!-- Setting the template to view in the instant-toolbar -->
-  <ng-template #actionsRef>
+  <ng-container *instantFormActionsDef>
+    TEST
     <button (click)="save()"><i class="fa fa-fw fa-save"></i></button>
-  </ng-template>
+  </ng-container>
 
   <label>Test</label>
   <input type="text" formControlName="test">
