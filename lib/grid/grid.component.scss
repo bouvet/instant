@@ -14,7 +14,7 @@
     > button {
       visibility: hidden;
     }
-    md-card {
+    mat-card {
       display: none;
       position: absolute;
       left: 0;
@@ -22,7 +22,7 @@
       &.open {
         display: block;
       }
-      md-form-field {
+      mat-form-field {
         width: 100%;
       }
     }

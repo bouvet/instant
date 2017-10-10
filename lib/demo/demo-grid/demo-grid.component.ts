@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sort, PageEvent, MdPaginatorIntl } from '@angular/material';
+import { Sort, PageEvent, MatPaginatorIntl } from '@angular/material';
 
 import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from '../../grid';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ export class DemoGridComponent implements OnInit {
   filter: Filter;
   data: InstantDataSource<any>;
 
-  constructor(private paginatorIntl: MdPaginatorIntl, private router: Router, private route: ActivatedRoute) { }
+  constructor(private paginatorIntl: MatPaginatorIntl, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     // Translations

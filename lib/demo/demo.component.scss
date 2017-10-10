@@ -4,8 +4,12 @@
     width: 15px;
   }
 }
-md-card {
+mat-card {
   position: absolute;
   z-index: 100;
   right: 0;
+}
+
+.toolbar {
+  display: flex;
 }

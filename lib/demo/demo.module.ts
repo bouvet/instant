@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MdButtonModule, MdCardModule, MdTableModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatTableModule } from '@angular/material';
 
 import { DemoComponent } from './demo.component';
 import { GridModule } from '../grid';
@@ -28,8 +28,8 @@ import { DemoDetailComponent } from './demo-detail/demo-detail.component';
     ]),
 
     // Material Design modules
-    MdButtonModule,
-    MdCardModule,
+    MatButtonModule,
+    MatCardModule,
 
     // Instant modules
     GridModule,

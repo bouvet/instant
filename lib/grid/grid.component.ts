@@ -2,7 +2,7 @@ import {
   Component, Input, ViewChildren, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
   ElementRef, QueryList, EventEmitter, Output
 } from '@angular/core';
-import { MdSort, Sort } from '@angular/material';
+import { MatSort, Sort } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/add/operator/merge';
 
@@ -22,7 +22,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: InstantDataSource<any>;
   @ContentChildren(ColumnDirective) columns: ColumnDirective[];
   @Output() rowClicked = new EventEmitter<RowClickEvent>();
-  @ViewChild(MdSort) sort: MdSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   _displayedColumns: string[];
   @Input()
@@ -50,7 +50,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   onRowClicked(row, $event) {
-    const cellName = [].slice.call($event.target.closest('md-cell').classList)
+    const cellName = [].slice.call($event.target.closest('mat-cell').classList)
       .find(c => c.indexOf('mat-column-') > -1)
       .substr('mat-column-'.length);
 
@@ -61,7 +61,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   onClick($event) {
     const headersToClose: string[] = [].slice
       // Find all header cells
-      .call(this.elRef.nativeElement.querySelectorAll('md-header-cell'))
+      .call(this.elRef.nativeElement.querySelectorAll('mat-header-cell'))
       // Filter away current target
       .filter(b => !b.contains($event.target))
       // Get the name of the column

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  MdTableModule, MdSortModule, MdInputModule, MdCardModule, MdButtonModule, MdToolbarModule, MdPaginatorModule
+  MatTableModule, MatSortModule, MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatPaginatorModule
 } from '@angular/material';
 
 import { GridComponent } from './grid.component';
@@ -19,13 +19,13 @@ import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
 
     BrowserAnimationsModule,
 
-    MdTableModule,
-    MdSortModule,
-    MdInputModule,
-    MdCardModule,
-    MdButtonModule,
-    MdToolbarModule,
-    MdPaginatorModule,
+    MatTableModule,
+    MatSortModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatPaginatorModule,
   ],
   declarations: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ],
   exports: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ]

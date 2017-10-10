@@ -1,7 +1,7 @@
 import { Http } from '@angular/http';
 import { EventEmitter } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Sort, MdSort } from '@angular/material';
+import { Sort, MatSort } from '@angular/material';
 import { Observable, Subject } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/merge';
@@ -25,7 +25,7 @@ export interface Sorter {
 }
 
 /**
- * This is the object the MD Table actually uses.
+ * This is the object the Mat Table actually uses.
  * It holds an `InstantDatabase` object, and deliveres
  * living data from this object to the grid.
  */
