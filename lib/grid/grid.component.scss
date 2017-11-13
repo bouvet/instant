@@ -10,23 +10,8 @@
   [role="heading"] {
     flex: 1;
   }
-  .action {
-    > button {
-      visibility: hidden;
-    }
-    mat-card {
-      display: none;
-      position: absolute;
-      left: 0;
-      right: 0;
-      &.open {
-        display: block;
-      }
-      mat-form-field {
-        width: 100%;
-      }
-    }
-  }
+  // .action {
+  // }
 }
 
 :host.striped {
@@ -54,5 +39,10 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       }
     }
+  }
+  .no-padding {
+    max-height: 3rem;
+    padding: 0 16px;
+    overflow: hidden;
   }
 }

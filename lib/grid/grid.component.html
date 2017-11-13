@@ -3,30 +3,31 @@
     <!-- Header definition -->
     <mat-header-cell *matHeaderCellDef>
       <header>
-        <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
-          {{ col.label }}
-        </div>
-        <div class="flex-col" role="heading" *ngIf="col.sortable == false">
-          {{ col.label }}
-        </div>
         <div class="action" *ngIf="col.filterable != false">
-          <button mat-icon-button (click)="col.filterOpen = !col.filterOpen">
-            <i class="fa fa-fw fa-filter"></i>
-          </button>
-          <mat-card [ngClass]="{open: col.filterOpen}">
+          <mat-menu #filterMenu="matMenu">
             <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
               <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
             </ng-container>
 
             <ng-template #defaultFilterTemplate>
-              <mat-form-field>
+              <mat-form-field (click)="$event.stopPropagation()" class="no-padding">
                 <input matInput placeholder="Filter" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
                 <button mat-icon-button matSuffix (click)="col.setFilter(undefined)">
                   <i class="fa fa-times fa-fw"></i>
                 </button>
               </mat-form-field>
             </ng-template>
-          </mat-card>
+          </mat-menu>
+
+          <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+            <i class="fa fa-fw fa-filter"></i>
+          </button>
+        </div>
+        <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
+          {{ col.label }}
+        </div>
+        <div class="flex-col" role="heading" *ngIf="col.sortable == false">
+          {{ col.label }}
         </div>
       </header>
     </mat-header-cell>
