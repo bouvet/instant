@@ -1,4 +1,7 @@
-<button mat-icon-button (click)="showMenu = !showMenu"><i class="fa fa-fw fa-{{ icon }}"></i></button>
-<mat-card *ngIf="showMenu">
+<mat-menu #rowMenu="matMenu">
   <ng-content></ng-content>
-</mat-card>
+</mat-menu>
+
+<button mat-icon-button [matMenuTriggerFor]="rowMenu">
+  <i class="fa fa-fw fa-{{ icon }}"></i>
+</button>
