@@ -20,6 +20,7 @@ export interface RowClickEvent {
 })
 export class GridComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: InstantDataSource<any>;
+  @Input() selectedIndex: number;
   @ContentChildren(ColumnDirective) columns: ColumnDirective[];
   @Output() rowClicked = new EventEmitter<RowClickEvent>();
   @ViewChild(MatSort) sort: MatSort;
@@ -50,11 +51,13 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   onRowClicked(row, $event) {
-    const cellName = [].slice.call($event.target.closest('mat-cell').classList)
-      .find(c => c.indexOf('mat-column-') > -1)
-      .substr('mat-column-'.length);
+    if ($event.target.closest('instant-grid-row-menu') === null) {
+      const cellName = [].slice.call($event.target.closest('mat-cell').classList)
+        .find(c => c.indexOf('mat-column-') > -1)
+        .substr('mat-column-'.length);
 
-    this.rowClicked.emit({data: row, colName: cellName});
+      this.rowClicked.emit({data: row, colName: cellName});
+    }
   }
 
   @HostListener('document:click', ['$event'])

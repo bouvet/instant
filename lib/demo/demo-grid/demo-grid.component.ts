@@ -17,6 +17,8 @@ export class DemoGridComponent implements OnInit {
   filter: Filter;
   data: InstantDataSource<any>;
 
+  currentIndex = 1;
+
   constructor(private paginatorIntl: MatPaginatorIntl, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {

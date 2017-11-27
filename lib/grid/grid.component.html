@@ -4,24 +4,23 @@
     <mat-header-cell *matHeaderCellDef>
       <header>
         <div class="action" *ngIf="col.filterable != false">
-          <mat-menu #filterMenu="matMenu">
+          <button mat-icon-button (click)="col.filterOpen = !col.filterOpen">
+            <i class="fa fa-fw fa-filter"></i>
+          </button>
+          <mat-card [ngClass]="{open: col.filterOpen}">
             <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
               <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
             </ng-container>
 
             <ng-template #defaultFilterTemplate>
-              <mat-form-field (click)="$event.stopPropagation()" class="no-padding">
+              <mat-form-field class="no-padding">
                 <input matInput placeholder="Filter" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
                 <button mat-icon-button matSuffix (click)="col.setFilter(undefined)">
                   <i class="fa fa-times fa-fw"></i>
                 </button>
               </mat-form-field>
             </ng-template>
-          </mat-menu>
-
-          <button mat-icon-button [matMenuTriggerFor]="filterMenu">
-            <i class="fa fa-fw fa-filter"></i>
-          </button>
+          </mat-card>
         </div>
         <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
           {{ col.label }}
@@ -45,5 +44,8 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row, $event)"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;let index=index;"
+           [ngClass]="{highlight: index === selectedIndex}"
+           [attr.data-rowIndex]="index"
+           (click)="onRowClicked(row, $event)"></mat-row>
 </mat-table>
