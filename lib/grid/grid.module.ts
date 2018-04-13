@@ -10,7 +10,7 @@ import {
 import { GridComponent } from './grid.component';
 import { ColumnDirective } from './column.directive';
 import { GridToolbarComponent } from './toolbar/grid-toolbar.component';
-//import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
+import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
 
 @NgModule({
   imports: [
