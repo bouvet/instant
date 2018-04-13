@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatTableModule, MatSortModule, MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatPaginatorModule, MatMenuModule
@@ -16,8 +15,6 @@ import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
   imports: [
     CommonModule,
     FormsModule,
-
-    //BrowserAnimationsModule,
 
     MatTableModule,
     MatSortModule,
