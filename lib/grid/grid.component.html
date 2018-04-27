@@ -4,10 +4,7 @@
     <mat-header-cell *matHeaderCellDef>
       <header>
         <div class="action" *ngIf="col.filterable != false">
-          <button mat-icon-button (click)="col.filterOpen = !col.filterOpen">
-            <i class="fa fa-fw fa-filter"></i>
-          </button>
-          <mat-card [ngClass]="{open: col.filterOpen}">
+          <mat-menu [matMenuTriggerFor]="appMenu">
             <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
               <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
             </ng-container>
@@ -20,7 +17,7 @@
                 </button>
               </mat-form-field>
             </ng-template>
-          </mat-card>
+          </mat-menu>
         </div>
         <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
           {{ col.label }}
