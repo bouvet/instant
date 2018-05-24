@@ -37,6 +37,10 @@
         height: 48px;
         vertical-align: middle;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        padding-left: 3px;
+      }
+      >.mat-cell{
+        border-left: 1px solid rgba(0, 0, 0, 0.12);
       }
     }
   }
@@ -56,7 +60,7 @@
     //position: absolute;
     //left: 0;
     //right: 0;
-    padding: 5px 14px;
+    padding: 0px 0px;
 
     //&.open {
     //  display: block;
@@ -67,4 +71,8 @@
       margin: 0;
     }
   }
+}
+
+.mat-icon-button {
+  width: 18px;
 }
