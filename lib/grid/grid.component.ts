@@ -2,7 +2,7 @@ import {
   Component, Input, ViewChildren, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
   ElementRef, QueryList, EventEmitter, Output
 } from '@angular/core';
-import { MatSort, Sort } from '@angular/material';
+import { MatSort, Sort, MatMenuTrigger } from '@angular/material';
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/add/operator/merge';
 
@@ -72,5 +72,11 @@ export class GridComponent implements AfterContentInit, OnDestroy {
 
     // If any columns (not including current target) is marked as open close it.
     this.columns.filter(c => headersToClose.includes(c.name)).forEach(c => c.filterOpen = false);
+  }
+
+  checkClose($event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
+    if ($event.key === 'Enter') {
+      menuTrigger.closeMenu();
+    }
   }
 }
