@@ -13,13 +13,13 @@
               <mat-form-field class="no-padding">
                 <input matInput placeholder="Filter" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
                 <button mat-icon-button matSuffix (click)="col.setFilter(undefined)">
-                  <i class="fa fa-times fa-fw"></i>
+                  <i class="fa far fa-times fa-fw"></i>
                 </button>
               </mat-form-field>
             </ng-template>
           </mat-menu>
           <button mat-icon-button [matMenuTriggerFor]="appMenu" #menuTrigger="matMenuTrigger">
-            <i class="fa fa-fw fa-filter"></i>
+            <i class="fa far fa-fw fa-filter"></i>
           </button>
         </div>
         <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
