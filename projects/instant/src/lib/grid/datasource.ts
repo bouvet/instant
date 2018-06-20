@@ -1,12 +1,8 @@
-import { Http } from '@angular/http';
 import { EventEmitter } from '@angular/core';
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Sort, MatSort } from '@angular/material';
-import { Observable, Subject } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/observable/merge';
+import { DataSource } from '@angular/cdk/collections';
+import { Sort } from '@angular/material';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { ColumnFilter } from './column.directive';
-import { Subscription } from 'rxjs/Subscription';
 
 export interface ChangeEvent {
   [event: string]: {

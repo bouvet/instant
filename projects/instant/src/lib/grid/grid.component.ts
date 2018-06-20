@@ -1,13 +1,12 @@
 import {
-  Component, Input, ViewChildren, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
-  ElementRef, QueryList, EventEmitter, Output
+  Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
+  ElementRef, EventEmitter, Output
 } from '@angular/core';
-import { MatSort, Sort, MatMenuTrigger } from '@angular/material';
-import { Observable, Subscription } from 'rxjs/Rx';
-import 'rxjs/add/operator/merge';
+import { MatSort, MatMenuTrigger  } from '@angular/material';
+import { Subscription, merge } from 'rxjs';
 
-import { InstantDatabase, InstantDataSource } from './datasource';
-import { ColumnFilter, ColumnDirective } from './column.directive';
+import { InstantDataSource } from './datasource';
+import { ColumnDirective } from './column.directive';
 
 export interface RowClickEvent {
   data: any;
@@ -31,7 +30,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   get displayedColumns(): string[] {
     return this._displayedColumns = this._displayedColumns || (this.columns ? this.columns.map(c => c.name) : null);
   }
-  private filterSubscriptions: Subscription[];
+  private subscriptions: Subscription[];
 
   constructor(public elRef: ElementRef) { }
 
@@ -39,14 +38,14 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     if (this.columns && this.columns.length) {
       this.dataSource.db._configure({
         sortChange: this.sort.sortChange,
-        filterChange: Observable.merge(...this.columns.map(c => c.filter))
+        filterChange: merge(...this.columns.map(c => c.filter))
       });
     }
   }
 
   ngOnDestroy() {
-    if (this.filterSubscriptions && this.filterSubscriptions.length) {
-      this.filterSubscriptions.map(f => f.unsubscribe());
+    if (this.subscriptions && this.subscriptions.length) {
+      this.subscriptions.map(f => f.unsubscribe());
     }
   }
 

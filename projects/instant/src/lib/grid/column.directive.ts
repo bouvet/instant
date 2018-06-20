@@ -1,5 +1,5 @@
 import { Input, Directive, TemplateRef, ContentChild, OnInit, ViewChild } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 
 /**
  *

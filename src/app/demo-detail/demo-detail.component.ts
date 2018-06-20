@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/c
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'instant-demo-detail',
+  selector: 'app-demo-detail',
   templateUrl: './demo-detail.component.html',
   styleUrls: ['./demo-detail.component.scss']
 })

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Sort, PageEvent, MatPaginatorIntl } from '@angular/material';
 
-import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from '../../grid';
+import { InstantDataSource, InstantDatabase, Sorter, Filter, RowClickEvent } from 'instant';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'instant-demo-grid',
+  selector: 'app-demo-grid',
   templateUrl: './demo-grid.component.html',
   styleUrls: ['./demo-grid.component.scss']
 })

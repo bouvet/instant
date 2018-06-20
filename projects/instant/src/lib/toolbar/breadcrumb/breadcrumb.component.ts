@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UrlSegment, Router, NavigationEnd, UrlTree, Params, ActivatedRoute, PRIMARY_OUTLET } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Router, NavigationEnd, Params, ActivatedRoute, PRIMARY_OUTLET } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-interface IBreadcrumb {
+export interface IBreadcrumb {
   label: string;
   params: Params;
   url: string;
@@ -21,7 +22,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.router.events.filter(event => event instanceof NavigationEnd).subscribe(nav => {
+    this.subscriptions.push(this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(nav => {
       console.log('url changed');
       const root: ActivatedRoute = this.route.root;
       this.routeMap = this.getBreadcrumbs(root);
@@ -35,11 +36,9 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   /**
    * Returns array of IBreadcrumb objects that represent the breadcrumb
    *
-   * @class DetailComponent
-   * @method getBreadcrumbs
-   * @param {ActivateRoute} route
-   * @param {string} url
-   * @param {IBreadcrumb[]} breadcrumbs
+   * @param route
+   * @param url
+   * @param breadcrumbs
    */
   private getBreadcrumbs(route: ActivatedRoute, url: string= '', breadcrumbs: IBreadcrumb[]= []): IBreadcrumb[] {
     const ROUTE_DATA_BREADCRUMB = 'breadcrumb';

@@ -11,7 +11,7 @@
 
             <ng-template #defaultFilterTemplate>
               <mat-form-field class="no-padding">
-                <input matInput placeholder="Filter" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)" [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
+                <input matInput placeholder="Filter" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)"  [(ngModel)]="col.filterValue" [ngModelOptions]="{standalone:true}" (change)="col.setFilter(col.filterValue)">
                 <button mat-icon-button matSuffix (click)="col.setFilter(undefined)">
                   <i class="fa far fa-times fa-fw"></i>
                 </button>

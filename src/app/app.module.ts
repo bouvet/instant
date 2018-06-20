@@ -6,20 +6,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule, MatCardModule, MatTableModule } from '@angular/material';
 
-import { DemoComponent } from './app.component';
-import { GridModule } from '../grid';
-import { ToolbarModule } from '../toolbar';
+import { AppComponent } from './app.component';
 import { DemoGridComponent } from './demo-grid/demo-grid.component';
 import { DemoDetailComponent } from './demo-detail/demo-detail.component';
+import { GridModule, ToolbarModule } from 'instant';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
-    DemoComponent,
+    AppComponent,
     DemoGridComponent,
     DemoDetailComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+
     HttpModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -36,6 +39,6 @@ import { DemoDetailComponent } from './demo-detail/demo-detail.component';
     ToolbarModule
   ],
   providers: [],
-  bootstrap: [DemoComponent]
+  bootstrap: [AppComponent]
 })
-export class DemoModule { }
+export class AppModule { }
