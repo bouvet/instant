@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule, MatCardModule, MatTableModule } from '@angular/material';
 
-import { DemoComponent } from './demo.component';
+import { DemoComponent } from './app.component';
 import { GridModule } from '../grid';
 import { ToolbarModule } from '../toolbar';
 import { DemoGridComponent } from './demo-grid/demo-grid.component';
