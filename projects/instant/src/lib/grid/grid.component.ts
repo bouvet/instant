@@ -1,3 +1,4 @@
+import '../closest-polyfill';
 import {
   Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
   ElementRef, EventEmitter, Output
