@@ -1,4 +1,4 @@
-import '../closest-polyfill';
+import 'element-closest';
 import {
   Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
   ElementRef, EventEmitter, Output
@@ -21,6 +21,7 @@ export interface RowClickEvent {
 export class GridComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: InstantDataSource<any>;
   @Input() selectedIndex: number;
+  @Input() sticky: boolean;
   @ContentChildren(ColumnDirective) columns: ColumnDirective[];
   @Output() rowClicked = new EventEmitter<RowClickEvent>();
   @ViewChild(MatSort) sort: MatSort;
@@ -52,7 +53,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
 
   onRowClicked(row, $event) {
     if ($event.target.closest('instant-grid-row-menu') === null) {
-      const cellName = [].slice.call($event.target.closest('mat-cell').classList)
+      const cellName = [].slice.call($event.target.closest('td').classList)
         .find(c => c.indexOf('mat-column-') > -1)
         .substr('mat-column-'.length);
 
@@ -64,7 +65,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   onClick($event) {
     const headersToClose: string[] = [].slice
       // Find all header cells
-      .call(this.elRef.nativeElement.querySelectorAll('mat-header-cell'))
+      .call(this.elRef.nativeElement.querySelectorAll('th'))
       // Filter away current target
       .filter(b => !b.contains($event.target))
       // Get the name of the column

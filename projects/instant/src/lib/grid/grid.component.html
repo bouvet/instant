@@ -1,7 +1,7 @@
-<mat-table #table [dataSource]="dataSource" matSort>
+<table mat-table #table [dataSource]="dataSource" matSort>
   <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
     <!-- Header definition -->
-    <mat-header-cell *matHeaderCellDef>
+    <th mat-header-cell *matHeaderCellDef>
       <header>
         <div class="action" *ngIf="col.filterable != false">
           <mat-menu #appMenu="matMenu">
@@ -44,10 +44,10 @@
           {{ col.label }}
         </div>
       </header>
-    </mat-header-cell>
+    </th>
 
     <!-- Cell definition -->
-    <mat-cell *matCellDef="let element">
+    <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="col.cellRef; else defaultCellTemplate">
         <ng-container *ngTemplateOutlet="col.cellRef;context:{row:element,col:col.name}"></ng-container>
       </ng-container>
@@ -55,12 +55,11 @@
       <ng-template #defaultCellTemplate>
         {{ element[col.name] }}
       </ng-template>
-    </mat-cell>
+    </td>
   </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;let index=index;"
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: sticky"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;let index=index;"
            [ngClass]="{highlight: index === selectedIndex}"
            [attr.data-rowIndex]="index"
-           (click)="onRowClicked(row, $event)"></mat-row>
-</mat-table>
+           (click)="onRowClicked(row, $event)"></tr>
+</table>
