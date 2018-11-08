@@ -19,8 +19,10 @@
 
 :host.striped {
     [role="row"] {
+        background: #fff;
         &:nth-child(even) {
-            background: rgba(0, 0, 0, 0.02);
+            // background: rgba(0, 0, 0, 0.02);
+            background: #fefefe;
         }
     }
 }

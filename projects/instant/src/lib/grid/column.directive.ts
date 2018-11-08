@@ -23,6 +23,7 @@ export class ColumnDirective implements OnInit {
   @Input() label: string; // Defaults to the identifier of column
   @Input() filterable = true;
   @Input() sortable = true;
+  @Input() sticky = false;
 
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
