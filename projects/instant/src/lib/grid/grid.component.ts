@@ -89,7 +89,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       classes.push('highlight');
     }
 
-    if (this.rowAttributes.length > 0) {
+    if (this.rowAttributes && this.rowAttributes.length > 0) {
       const attr = this.rowAttributes;
       for (let i = 0; i < attr.length; i++) {
         if (attr[i]['index'] === index) {
