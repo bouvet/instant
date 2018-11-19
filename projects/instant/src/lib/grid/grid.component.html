@@ -59,7 +59,7 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: sticky"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;let index=index;"
-           [ngClass]="{highlight: index === selectedIndex}"
+           [ngClass]="getRowClasses(index)"
            [attr.data-rowIndex]="index"
            (click)="onRowClicked(row, $event)"></tr>
 </table>

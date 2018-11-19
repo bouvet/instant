@@ -3,7 +3,7 @@ import {
   Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
   ElementRef, EventEmitter, Output
 } from '@angular/core';
-import { MatSort, MatMenuTrigger  } from '@angular/material';
+import { MatSort, MatMenuTrigger } from '@angular/material';
 import { Subscription, merge } from 'rxjs';
 
 import { InstantDataSource } from './datasource';
@@ -22,6 +22,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   @Input() dataSource: InstantDataSource<any>;
   @Input() selectedIndex: number;
   @Input() sticky: boolean;
+  @Input() rowAttributes: Array<any>;
   @ContentChildren(ColumnDirective) columns: ColumnDirective[];
   @Output() rowClicked = new EventEmitter<RowClickEvent>();
   @ViewChild(MatSort) sort: MatSort;
@@ -57,7 +58,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
         .find(c => c.indexOf('mat-column-') > -1)
         .substr('mat-column-'.length);
 
-      this.rowClicked.emit({data: row, colName: cellName});
+      this.rowClicked.emit({ data: row, colName: cellName });
     }
   }
 
@@ -79,5 +80,25 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     if ($event.key === 'Enter') {
       menuTrigger.closeMenu();
     }
+  }
+
+  getRowClasses(index: number) {
+    let classes: string[] = [];
+
+    if (index === this.selectedIndex) {
+      classes.push('highlight');
+    }
+
+    if (this.rowAttributes.length > 0) {
+      const attr = this.rowAttributes;
+      for (let i = 0; i < attr.length; i++) {
+        if (attr[i]['index'] === index) {
+          if (attr[i]['class'] && attr[i]['class'].length > 0) {
+            classes = classes.concat(attr[i]['class']);
+          }
+        }
+      }
+    }
+    return classes.join(' ');
   }
 }
