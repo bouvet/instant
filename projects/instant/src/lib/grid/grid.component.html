@@ -60,6 +60,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: sticky"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;let index=index;"
            [ngClass]="getRowClasses(index)"
+           [ngStyle]="getRowStyles(index)"
            [attr.data-rowIndex]="index"
            (click)="onRowClicked(row, $event)"></tr>
 </table>

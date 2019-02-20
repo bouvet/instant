@@ -101,4 +101,20 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     }
     return classes.join(' ');
   }
+
+  getRowStyles(index: number) {
+    let styles: string[] = [];
+
+    if (this.rowAttributes && this.rowAttributes.length > 0) {
+      const attr = this.rowAttributes;
+      for (let i = 0; i < attr.length; i++) {
+        if (attr[i]['index'] === index) {
+          if (attr[i]['style'] && attr[i]['style'].length > 0) {
+            styles = styles.concat(attr[i]['style']);
+          }
+        }
+      }
+    }
+    return styles.join(' ');
+  }
 }
