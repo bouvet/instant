@@ -13,7 +13,7 @@
       <ng-template #cell let-row="row" let-col="col">{{ row[col] }}</ng-template>
     </instant-column>
 
-    <instant-column name="name"></instant-column>
+    <instant-column name="name" [instant-style]="{'min-width': '120px'}"></instant-column>
     <instant-column name="type"></instant-column>
     <instant-column name="uuid"></instant-column>
     <instant-column name="actions" label="" [filterable]="false" [sortable]="false">

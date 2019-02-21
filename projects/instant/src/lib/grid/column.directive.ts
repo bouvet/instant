@@ -24,6 +24,7 @@ export class ColumnDirective implements OnInit {
   @Input() filterable = true;
   @Input() sortable = true;
   @Input() sticky = false;
+  @Input('instant-style') instantStyle = {};
 
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
