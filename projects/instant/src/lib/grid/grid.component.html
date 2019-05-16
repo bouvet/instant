@@ -1,5 +1,5 @@
 <table mat-table #table [dataSource]="dataSource" matSort>
-  <ng-container *ngFor="let col of columns" [matColumnDef]="col.name" [sticky]="col.sticky">
+  <ng-container *ngFor="let col of columns; let i = index" [matColumnDef]="col.name" [sticky]="col.sticky">
     <!-- Header definition -->
     <th mat-header-cell *matHeaderCellDef [ngStyle]="col.instantStyle">
       <header>
@@ -37,10 +37,23 @@
             </ng-container>
           </button>
         </div>
-        <div mat-sort-header class="flex-col" role="heading" *ngIf="col.sortable != false">
+        <div class="flex-col" role="heading" *ngIf="i===0">
+            <button mat-icon-button [matMenuTriggerFor]="clearmenu" class="mat-icon-button-ellipsis"><i style="color: #000" class="fa fa-fw fa-ellipsis-v"></i></button>
+            <mat-menu #clearmenu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item class="mat-menu-item" (click)="reload()">
+                    <span class="fa fa-refresh"></span>
+                    <span>Refresh</span>
+                </button>
+                <button mat-menu-item class="mat-menu-item" (click)="removeFilters()">
+                    <span class="fa fa-filter"></span>
+                     <span>Clear filter</span>
+                </button>
+            </mat-menu>
+        </div>
+        <div mat-sort-header class="flex-col" role="heading" *ngIf="i!=0 && col.sortable != false">
           {{ col.label }}
         </div>
-        <div class="flex-col" role="heading" *ngIf="col.sortable == false">
+        <div class="flex-col" role="heading" *ngIf="i!=0 && col.sortable == false">
           {{ col.label }}
         </div>
       </header>

@@ -3,6 +3,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Sort } from '@angular/material';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { ColumnFilter } from './column.directive';
+import { debounce } from '../utils/debounce';
 
 export interface ChangeEvent {
   [event: string]: {
@@ -56,6 +57,7 @@ export abstract class InstantDatabase<T> {
   dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   dataSnapshot;
   private _dataChangeSubscriber: Subscription;
+  private dataReader = debounce(this.onRead, 100);
 
   onInit() {
     this.onRead();
@@ -75,15 +77,18 @@ export abstract class InstantDatabase<T> {
     this._sortSubscriber = this.sortChange.subscribe(sort => {
       this.sortCache = {}; // Reset always. Multiple column sort is NOT supported
       this.sortCache[sort.active] = sort.direction;
-      this.onRead(this.sortCache, this.filterCache);
+      this.dataReader(this.sortCache, this.filterCache);
     });
     this._filterSubscriber = this.filterChange.subscribe(filter => {
       this.filterCache[filter.active] = filter.filter;
-      this.onRead(this.sortCache, this.filterCache);
+      this.dataReader(this.sortCache, this.filterCache);
     });
 
     // Attached to a grid. Run init
     if (this.onInit) { this.onInit(); }
   }
+
+
+
 }
 

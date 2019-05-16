@@ -35,7 +35,7 @@ export class ColumnDirective implements OnInit {
   filterOpen: boolean;
   filter = new ReplaySubject<ColumnFilter>();
   filterValue: any;
-  private oldFilter: any;
+  oldFilter: any;
 
   /**
    *
@@ -55,13 +55,19 @@ export class ColumnDirective implements OnInit {
    *
    * @param obj The filter as received from the filter template
    */
-  setFilter(obj: any) {
+  setFilter(obj: any, noEmit: boolean = false) {
     if (obj !== this.oldFilter) {
-      this.filter.next({active: this.name, filter: obj});
+      if (!noEmit) {
+        this.filter.next({active: this.name, filter: obj});
+      }
       this.filterValue = obj;
       this.oldFilter = obj;
     }
     this.filterOpen = false;
+  }
+
+  removeFilter() {
+    this.setFilter(null);
   }
 }
 
