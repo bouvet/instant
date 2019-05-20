@@ -107,7 +107,7 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   getFilterValue(col) {
-    if (col.filterValue !== undefined) {
+    if (col.filterValue) {
       if (typeof col.filterValue === 'object') {
         return col.filterValue.key;
       }
