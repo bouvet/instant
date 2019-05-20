@@ -1,7 +1,15 @@
 import 'element-closest';
 import {
-  Component, Input, ContentChildren, ViewChild, OnDestroy, AfterContentInit, HostListener,
-  ElementRef, EventEmitter, Output
+  Component,
+  Input,
+  ContentChildren,
+  ViewChild,
+  OnDestroy,
+  AfterContentInit,
+  HostListener,
+  ElementRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { MatSort, MatMenuTrigger } from '@angular/material';
 import { Subscription, merge } from 'rxjs';
@@ -29,13 +37,17 @@ export class GridComponent implements AfterContentInit, OnDestroy {
 
   _displayedColumns: string[];
   @Input()
-  set displayedColumns(v) { this._displayedColumns = v; }
+  set displayedColumns(v) {
+    this._displayedColumns = v;
+  }
   get displayedColumns(): string[] {
-    return this._displayedColumns = this._displayedColumns || (this.columns ? this.columns.map(c => c.name) : null);
+    return (this._displayedColumns =
+      this._displayedColumns ||
+      (this.columns ? this.columns.map(c => c.name) : null));
   }
   private subscriptions: Subscription[];
 
-  constructor(public elRef: ElementRef) { }
+  constructor(public elRef: ElementRef) {}
 
   ngAfterContentInit() {
     if (this.columns && this.columns.length) {
@@ -54,7 +66,8 @@ export class GridComponent implements AfterContentInit, OnDestroy {
 
   onRowClicked(row, $event) {
     if ($event.target.closest('instant-grid-row-menu') === null) {
-      const cellName = [].slice.call($event.target.closest('td').classList)
+      const cellName = [].slice
+        .call($event.target.closest('td').classList)
         .find(c => c.indexOf('mat-column-') > -1)
         .substr('mat-column-'.length);
 
@@ -70,16 +83,37 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       // Filter away current target
       .filter(b => !b.contains($event.target))
       // Get the name of the column
-      .map(b => [].slice.call(b.classList).find(c => c.indexOf('mat-column-') > -1).substr('mat-column-'.length));
+      .map(b =>
+        [].slice
+          .call(b.classList)
+          .find(c => c.indexOf('mat-column-') > -1)
+          .substr('mat-column-'.length)
+      );
 
     // If any columns (not including current target) is marked as open close it.
-    this.columns.filter(c => headersToClose.includes(c.name)).forEach(c => c.filterOpen = false);
+    this.columns
+      .filter(c => headersToClose.includes(c.name))
+      .forEach(c => (c.filterOpen = false));
   }
 
   checkClose($event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
     if ($event.key === 'Enter') {
       menuTrigger.closeMenu();
     }
+  }
+
+  onFilterChange($event, col) {
+    col.setFilter($event.target.value);
+  }
+
+  getFilterValue(col) {
+    if (col.filterValue !== undefined) {
+      if (typeof col.filterValue === 'object') {
+        return col.filterValue.key;
+      }
+      return col.filterValue;
+    }
+    return '';
   }
 
   getRowClasses(index: number) {
