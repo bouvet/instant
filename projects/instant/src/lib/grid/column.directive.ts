@@ -56,7 +56,7 @@ export class ColumnDirective implements OnInit {
    * @param obj The filter as received from the filter template
    */
   setFilter(obj: any, noEmit: boolean = false) {
-    if (obj !== this.oldFilter) {
+    if ((obj !== this.oldFilter) || (obj === null)) {
       if (!noEmit) {
         this.filter.next({active: this.name, filter: obj});
       }

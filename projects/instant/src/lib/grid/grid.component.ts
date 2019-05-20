@@ -126,9 +126,11 @@ export class GridComponent implements AfterContentInit, OnDestroy {
 
   reload() {
     this.columns.forEach((col,index) => {
-      if (index == 0) {
-        col.setFilter(undefined);
-      } else return;
+      if (index === 0) {
+        col.removeFilter();
+      } else {
+        return;
+      }
     });
   }
 }
