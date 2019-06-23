@@ -103,7 +103,13 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   onFilterChange($event, col) {
+    console.log('instant grid component - onFilterChange ' + col.name);
     col.setFilter($event.target.value);
+  }
+
+  onOperatorChange(operator: string, col) {
+    console.log('instant grid component - onOperatorChange ' + col.name);
+    col.setOperator(operator);
   }
 
   getFilterValue(col) {
@@ -114,6 +120,14 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       return col.filterValue;
     }
     return '';
+  }
+
+  getOperator(col) {
+    console.log('instant grid component - getOperator ' + col.name);
+    if (!col || !col.hasOwnProperty('operator')) {
+      return null;
+    }
+    return col.operator;
   }
 
   getRowClasses(index: number) {
@@ -153,12 +167,14 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   removeFilters() {
+    console.log('instant grid component - removeFilters');
     this.columns.forEach(col => {
       col.removeFilter();
     });
   }
 
   reload() {
+    console.log('instant grid component - reload');
     this.columns.forEach((col,index) => {
       if (index === 0) {
         col.removeFilter();

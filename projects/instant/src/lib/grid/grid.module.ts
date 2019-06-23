@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import {
-  MatTableModule, MatSortModule, MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatPaginatorModule, MatMenuModule
+  MatTableModule, MatSortModule, MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatPaginatorModule,
+  MatMenuModule, MatRadioModule, MatDatepickerModule
 } from '@angular/material';
 
 import { GridComponent } from './grid.component';
@@ -24,8 +25,11 @@ import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
     MatButtonModule,
     MatToolbarModule,
     MatPaginatorModule,
+    MatRadioModule,
+    MatDatepickerModule,
   ],
   declarations: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ],
-  exports: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ]
+  exports: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GridModule { }
