@@ -50,6 +50,7 @@ export class ColumnDirective implements OnInit {
   filter = new ReplaySubject<ColumnFilter>();
   filterValue: any;
   oldFilter: any;
+  initialOperator: string = null;
 
   /**
    *
@@ -75,6 +76,8 @@ export class ColumnDirective implements OnInit {
       default:
         this.operators = null;
     }
+
+    this.initialOperator = this.operator;
   }
 
   /**
@@ -183,7 +186,7 @@ export class ColumnDirective implements OnInit {
 
   removeFilter() {
     // Default operator back to CONTAINS
-    this.operator = 'CONTAINS';
+    this.operator = this.initialOperator ? this.initialOperator : 'CONTAINS';
     this.setFilterValue(null);
     this.isFilterSet = false;
   }
