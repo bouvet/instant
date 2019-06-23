@@ -1,6 +1,8 @@
 import { Input, Directive, TemplateRef, ContentChild, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ReplaySubject } from 'rxjs';
 import {DefaultFilterOption} from './filter-option/default-filter-option';
+import {DateFilterOption} from './filter-option/date-filter-option';
 
 export interface ColumnFilter {
   active: string;
@@ -14,7 +16,9 @@ export interface ColumnFilter {
  * 22.06.2019 ofsfrvor - Added support for different filter operators.
  *                       Added other input members (attribute, lookAttribute, lookupEntity, dataType, operator)
  *                       enabling control of the filter from the HTML tag.
- *                       TODO Need to implement language translation for the operator labels.
+ * 23.06.2019 ofsfrvor - Added dateFilterTemplate. Activate dateFilterTemplate by setting input member templateName.
+ *
+ * TODO Need to implement language translation for the operator labels.
  */
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -22,18 +26,19 @@ export interface ColumnFilter {
 })
 export class ColumnDirective implements OnInit {
   // Inputs
+  @Input() templateName: string = 'defaultFilterTemplate';
   @Input() name: string;  // Unique identifier for this column.
   @Input() label: string; // Defaults to the identifier of column
   @Input() filterable = true;
   @Input() sortable = true;
   @Input() sticky = false;
   @Input('instant-style') instantStyle = {};
-  @Input() operators: string[] = ['CONTAINS', 'STARTS_WITH', 'EQUALS', 'NOT_EQUALS', 'IS_NULL', 'IS_NOT_NULL'];
+  @Input() operators: string[];
   @Input() attribute: string;
   @Input() lookupAttribute: string;
   @Input() lookupEntity: string;
   @Input() dataType: string;
-  @Input() operator: string = this.operators && this.operators.length > 0 ? this.operators[0] : null;
+  @Input() operator: string;
 
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
@@ -49,11 +54,26 @@ export class ColumnDirective implements OnInit {
   /**
    *
    */
-  constructor() { }
+  constructor(
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
     if (this.label == null) {
       this.label = this.name;
+    }
+    // Set default operator list (if not already set)
+    switch (this.templateName) {
+      case 'defaultFilterTemplate':
+        this.operators = this.operators ? this.operators : ['CONTAINS', 'STARTS_WITH', 'EQUALS', 'NOT_EQUALS', 'IS_NULL', 'IS_NOT_NULL'];
+        this.operator = this.operator ? this.operator : 'CONTAINS';
+        break;
+      case 'dateFilterTemplate':
+        this.operators = this.operators ? this.operators : ['IS_NULL', 'IS_NOT_NULL'];
+        this.operator = this.operator ? this.operator : 'EQUALS';
+        break;
+      default:
+        this.operators = null;
     }
   }
 
@@ -109,6 +129,46 @@ export class ColumnDirective implements OnInit {
 
     this.filterOpen = false;
   }
+
+  setFromDate(date: Date) {
+    if (this.templateName !== 'dateFilterTemplate') {
+      return;
+    }
+
+    const filter: any = this.filterValue ? this.filterValue : new DateFilterOption();
+    filter.attribute = this.attribute;
+    filter.lookupAttribute = this.lookupAttribute;
+    filter.lookupEntity = this.lookupEntity;
+    filter.operator = this.operator;
+    filter.dataType = this.dataType;
+    filter.fromDate = this.toDbDateString(date);
+    this.setFilterValue(filter);
+  }
+
+  setToDate(date: Date) {
+    if (this.templateName !== 'dateFilterTemplate') {
+      return;
+    }
+
+    const filter: any = this.filterValue ? this.filterValue : new DateFilterOption();
+    filter.attribute = this.attribute;
+    filter.lookupAttribute = this.lookupAttribute;
+    filter.lookupEntity = this.lookupEntity;
+    filter.operator = this.operator;
+    filter.dataType = this.dataType;
+    filter.toDate = this.toDbDateString(date);
+    this.setFilterValue(filter);
+  }
+
+  private toDbDateString(date: Date): string {
+    if (date == null) {
+      return null;
+    }
+
+    const dateString = this.datePipe.transform(date, 'dd-MM-yyyy');
+    return dateString;
+  }
+
 
   setOperator(operator: string) {
     this.operator = operator;

@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -28,8 +28,21 @@ import { GridRowMenuComponent } from './row-menu/grid-row-menu.component';
     MatRadioModule,
     MatDatepickerModule,
   ],
-  declarations: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ],
-  exports: [ GridComponent, ColumnDirective, GridToolbarComponent, GridRowMenuComponent ],
+  declarations: [
+    GridComponent,
+    ColumnDirective,
+    GridToolbarComponent,
+    GridRowMenuComponent
+  ],
+  exports: [
+    GridComponent,
+    ColumnDirective,
+    GridToolbarComponent,
+    GridRowMenuComponent
+  ],
+  providers: [
+    DatePipe,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GridModule { }

@@ -5,14 +5,45 @@
       <header>
         <div class="action" *ngIf="col.filterable != false">
           <mat-menu #appMenu="matMenu">
-            <ng-container *ngIf="col.filterRef; else defaultFilterTemplate">
+            <ng-container *ngIf="col.filterRef">
               <ng-container *ngTemplateOutlet="col.filterRef;context:{col:col}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="!col.filterRef && col.templateName === 'defaultFilterTemplate'">
+              <ng-container *ngTemplateOutlet="defaultFilterTemplate;context:{col:col}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="!col.filterRef && col.templateName === 'dateFilterTemplate'">
+              <ng-container *ngTemplateOutlet="dateFilterTemplate;context:{col:col}"></ng-container>
             </ng-container>
 
             <ng-template #defaultFilterTemplate>
               <mat-form-field class="no-padding">
                 <input matInput #filter placeholder="Filter" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)" [value]="getFilterValue(col)" (change)="onFilterChange($event, col)">
                 <button mat-icon-button matSuffix (click)="col.removeFilter()">
+                  <i class="fa far fa-times fa-fw"></i>
+                </button>
+              </mat-form-field>
+              <mat-radio-group class="filter-radio-group" [(ngModel)]="col.operator">
+                <mat-radio-button class="filter-radio-button" *ngFor="let operator of col.operators" [value]="operator" (change)="onOperatorChange(operator, col)">{{operator}}</mat-radio-button>
+              </mat-radio-group>
+            </ng-template>
+
+            <ng-template #dateFilterTemplate>
+              <button mat-icon-button class="no-padding" (click)="removeFilter(col)">
+                <i class="fa far fa-times fa-fw"></i>
+              </button>
+              <mat-form-field class="no-padding">
+                <input matInput [matDatepicker]="fromControlDatePicker" placeholder="From" (click)="$event.stopPropagation()" [value]="getFromDate(col)" (dateChange)="onFromDateChange($event, col)">
+                <mat-datepicker-toggle matSuffix [for]="fromControlDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromControlDatePicker></mat-datepicker>
+                <button mat-icon-button matSuffix (click)="$event.stopPropagation(); onFromDateChange(null, col)">
+                  <i class="fa far fa-times fa-fw"></i>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="no-padding">
+                <input matInput [matDatepicker]="toControlDatePicker" placeholder="To" (click)="$event.stopPropagation()" [value]="getToDate(col)" (dateChange)="onToDateChange($event, col)">
+                <mat-datepicker-toggle matSuffix [for]="toControlDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #toControlDatePicker></mat-datepicker>
+                <button mat-icon-button matSuffix (click)="$event.stopPropagation(); onToDateChange(null, col)">
                   <i class="fa far fa-times fa-fw"></i>
                 </button>
               </mat-form-field>

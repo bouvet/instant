@@ -11,7 +11,7 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
-import { MatSort, MatMenuTrigger } from '@angular/material';
+import {MatSort, MatMenuTrigger, MatDatepickerInputEvent} from '@angular/material';
 import { Subscription, merge } from 'rxjs';
 
 import { InstantDataSource } from './datasource';
@@ -103,13 +103,21 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   onFilterChange($event, col) {
-    console.log('instant grid component - onFilterChange ' + col.name);
     col.setFilter($event.target.value);
   }
 
   onOperatorChange(operator: string, col) {
-    console.log('instant grid component - onOperatorChange ' + col.name);
     col.setOperator(operator);
+  }
+
+  onFromDateChange($event, col) {
+    console.log('instant grid component - onFromDateChange ');
+    col.setFromDate($event ? $event.target.value : null);
+  }
+
+  onToDateChange($event, col) {
+    console.log('instant grid component - onToDateChange ');
+    col.setToDate($event ? $event.target.value : null);
   }
 
   getFilterValue(col) {
@@ -120,6 +128,26 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       return col.filterValue;
     }
     return '';
+  }
+
+  getFromDate(col): Date {
+    if (col.filterValue) {
+      if (typeof col.filterValue === 'object') {
+        return col.filterValue.fromDate ? new Date(col.filterValue.fromDate) : null;
+      }
+      return new Date(col.filterValue);
+    }
+    return null;
+  }
+
+  getToDate(col): Date {
+    if (col.filterValue) {
+      if (typeof col.filterValue === 'object') {
+        return col.filterValue.toDate ? new Date(col.filterValue.toDate) : null;
+      }
+      return new Date(col.filterValue);
+    }
+    return null;
   }
 
   getOperator(col) {
@@ -164,6 +192,10 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       }
     }
     return styles.join(' ');
+  }
+
+  removeFilter(col) {
+    col.removeFilter();
   }
 
   removeFilters() {
