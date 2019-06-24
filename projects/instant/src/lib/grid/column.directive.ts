@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { ReplaySubject } from 'rxjs';
 import {DefaultFilterOption} from './filter-option/default-filter-option';
 import {DateFilterOption} from './filter-option/date-filter-option';
+import {DEFAULT_PACKAGE_URL_PROVIDER} from "@angular/platform-browser-dynamic/src/compiler_factory";
 
 export interface ColumnFilter {
   active: string;
@@ -17,16 +18,24 @@ export interface ColumnFilter {
  *                       Added other input members (attribute, lookAttribute, lookupEntity, dataType, operator)
  *                       enabling control of the filter from the HTML tag.
  * 23.06.2019 ofsfrvor - Added dateFilterTemplate. Activate dateFilterTemplate by setting input member templateName.
+ * 24.06.2019 ofsfrvor - If dataType is Long, Integer or BigDecimal, set input field type to number. Set default dataType to String.
+ *                       Using moment to convert dateString to date object.
  *
+ * TODO Automatically force cursor to input field when template is opened
  * TODO Need to implement language translation for the operator labels.
+ * TODO List filter options are not unchecked when list type filter is removed
  */
 @Directive({
   // tslint:disable-next-line:directive-selector
   selector: 'instant-column'
 })
 export class ColumnDirective implements OnInit {
+
+  public static readonly DEFAULT_FILTER_TEMPLATE: string = 'defaultFilterTemplate';
+  public static readonly DATE_FILTER_TEMPLATE: string = 'defaultFilterTemplate';
+
   // Inputs
-  @Input() templateName: string = 'defaultFilterTemplate';
+  @Input() templateName: string = ColumnDirective.DEFAULT_FILTER_TEMPLATE;
   @Input() name: string;  // Unique identifier for this column.
   @Input() label: string; // Defaults to the identifier of column
   @Input() filterable = true;
@@ -63,13 +72,18 @@ export class ColumnDirective implements OnInit {
     if (this.label == null) {
       this.label = this.name;
     }
+
+    if (this.templateName == null) {
+      this.templateName = ColumnDirective.DEFAULT_FILTER_TEMPLATE;
+    }
+
     // Set default operator list (if not already set)
     switch (this.templateName) {
-      case 'defaultFilterTemplate':
+      case ColumnDirective.DEFAULT_FILTER_TEMPLATE:
         this.operators = this.operators ? this.operators : ['CONTAINS', 'STARTS_WITH', 'ENDS_WITH', 'EQUALS', 'NOT_EQUALS', 'IS_NULL', 'IS_NOT_NULL'];
         this.operator = this.operator ? this.operator : 'CONTAINS';
         break;
-      case 'dateFilterTemplate':
+      case ColumnDirective.DATE_FILTER_TEMPLATE:
         this.operators = this.operators ? this.operators : ['IS_NULL', 'IS_NOT_NULL'];
         this.operator = this.operator ? this.operator : 'EQUALS';
         break;
