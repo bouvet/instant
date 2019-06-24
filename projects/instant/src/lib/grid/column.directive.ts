@@ -37,7 +37,7 @@ export class ColumnDirective implements OnInit {
   @Input() attribute: string;
   @Input() lookupAttribute: string;
   @Input() lookupEntity: string;
-  @Input() dataType: string;
+  @Input() dataType: string = 'String';
   @Input() operator: string;
 
   // Template refs
