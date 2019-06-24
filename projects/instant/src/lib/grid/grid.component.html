@@ -17,7 +17,7 @@
 
             <ng-template #defaultFilterTemplate>
               <mat-form-field class="no-padding">
-                <input matInput #filter placeholder="Filter" [type]="col.dataType == 'Long' ? 'number' : 'text'" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)" [value]="getFilterValue(col)" (change)="onFilterChange($event, col)">
+                <input matInput #filter placeholder="Filter" [type]="['Long', 'Integer', 'BigDecimal'].includes(col.dataType) ? 'number' : 'text'" (click)="$event.stopPropagation()" (keyup)="checkClose($event, menuTrigger)" [value]="getFilterValue(col)" (change)="onFilterChange($event, col)">
                 <button mat-icon-button matSuffix (click)="col.removeFilter()">
                   <i class="fa far fa-times fa-fw"></i>
                 </button>
