@@ -32,7 +32,7 @@ export interface ColumnFilter {
 export class ColumnDirective implements OnInit {
 
   public static readonly DEFAULT_FILTER_TEMPLATE: string = 'defaultFilterTemplate';
-  public static readonly DATE_FILTER_TEMPLATE: string = 'defaultFilterTemplate';
+  public static readonly DATE_FILTER_TEMPLATE: string = 'dateFilterTemplate';
 
   // Inputs
   @Input() templateName: string = ColumnDirective.DEFAULT_FILTER_TEMPLATE;
