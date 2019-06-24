@@ -13,9 +13,11 @@ import {
 } from '@angular/core';
 import {MatSort, MatMenuTrigger, MatDatepickerInputEvent} from '@angular/material';
 import { Subscription, merge } from 'rxjs';
-
 import { InstantDataSource } from './datasource';
 import { ColumnDirective } from './column.directive';
+import * as moment_ from 'moment';
+
+const moment = moment_;
 
 export interface RowClickEvent {
   data: any;
@@ -47,7 +49,9 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
   private subscriptions: Subscription[];
 
-  constructor(public elRef: ElementRef) {}
+  constructor(
+    public elRef: ElementRef
+  ) {}
 
   ngAfterContentInit() {
     if (this.columns && this.columns.length) {
@@ -130,10 +134,30 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     return '';
   }
 
+  toDate(dateObject: any): Date {
+    if (dateObject == null) {
+      return null;
+    }
+
+    if (typeof dateObject === 'string') {
+      const date: Date = moment(dateObject, 'DD-MM-YYYY').toDate();
+      return date;
+    }
+
+    if (dateObject) {
+      const date: Date = new Date(dateObject);
+      return date;
+    }
+
+    return null;
+  }
+
+
   getFromDate(col): Date {
     if (col.filterValue) {
       if (typeof col.filterValue === 'object') {
-        return col.filterValue.fromDate ? new Date(col.filterValue.fromDate) : null;
+        const date: Date = this.toDate(col.filterValue.fromDate);
+        return date;
       }
       return new Date(col.filterValue);
     }
@@ -143,7 +167,8 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   getToDate(col): Date {
     if (col.filterValue) {
       if (typeof col.filterValue === 'object') {
-        return col.filterValue.toDate ? new Date(col.filterValue.toDate) : null;
+        const date: Date = this.toDate(col.filterValue.toDate);
+        return date;
       }
       return new Date(col.filterValue);
     }
