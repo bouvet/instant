@@ -28,13 +28,15 @@
     "@angular/forms": "^7.0.2",
     "@angular/http": "^7.0.2",
     "@angular/material": "^7.0.2",
+    "@angular/material-moment-adapter": "^7.0.2",
     "@angular/platform-browser": "^7.0.2",
     "@angular/platform-browser-dynamic": "^7.0.2",
     "@angular/router": "^7.0.2",
     "core-js": "^2.5.7",
     "rxjs": "^6.3.3",
     "zone.js": "^0.8.26",
-    "element-closest": "^2.0.2"
+    "element-closest": "^2.0.2",
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.4",

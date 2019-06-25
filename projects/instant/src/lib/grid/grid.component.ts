@@ -11,11 +11,13 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
-import { MatSort, MatMenuTrigger } from '@angular/material';
+import {MatSort, MatMenuTrigger, MatDatepickerInputEvent} from '@angular/material';
 import { Subscription, merge } from 'rxjs';
-
 import { InstantDataSource } from './datasource';
 import { ColumnDirective } from './column.directive';
+import * as moment_ from 'moment';
+
+const moment = moment_;
 
 export interface RowClickEvent {
   data: any;
@@ -47,7 +49,9 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
   private subscriptions: Subscription[];
 
-  constructor(public elRef: ElementRef) {}
+  constructor(
+    public elRef: ElementRef
+  ) {}
 
   ngAfterContentInit() {
     if (this.columns && this.columns.length) {
@@ -106,6 +110,20 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     col.setFilter($event.target.value);
   }
 
+  onOperatorChange(operator: string, col) {
+    col.setOperator(operator);
+  }
+
+  onFromDateChange($event, col) {
+    console.log('instant grid component - onFromDateChange ');
+    col.setFromDate($event ? $event.target.value : null);
+  }
+
+  onToDateChange($event, col) {
+    console.log('instant grid component - onToDateChange ');
+    col.setToDate($event ? $event.target.value : null);
+  }
+
   getFilterValue(col) {
     if (col.filterValue) {
       if (typeof col.filterValue === 'object') {
@@ -114,6 +132,55 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       return col.filterValue;
     }
     return '';
+  }
+
+  toDate(dateObject: any): Date {
+    if (dateObject == null) {
+      return null;
+    }
+
+    if (typeof dateObject === 'string') {
+      const date: Date = moment(dateObject, 'DD-MM-YYYY').toDate();
+      return date;
+    }
+
+    if (dateObject) {
+      const date: Date = new Date(dateObject);
+      return date;
+    }
+
+    return null;
+  }
+
+
+  getFromDate(col): Date {
+    if (col.filterValue) {
+      if (typeof col.filterValue === 'object') {
+        const date: Date = this.toDate(col.filterValue.fromDate);
+        return date;
+      }
+      return new Date(col.filterValue);
+    }
+    return null;
+  }
+
+  getToDate(col): Date {
+    if (col.filterValue) {
+      if (typeof col.filterValue === 'object') {
+        const date: Date = this.toDate(col.filterValue.toDate);
+        return date;
+      }
+      return new Date(col.filterValue);
+    }
+    return null;
+  }
+
+  getOperator(col) {
+    console.log('instant grid component - getOperator ' + col.name);
+    if (!col || !col.hasOwnProperty('operator')) {
+      return null;
+    }
+    return col.operator;
   }
 
   getRowClasses(index: number) {
@@ -152,13 +219,19 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     return styles.join(' ');
   }
 
+  removeFilter(col) {
+    col.removeFilter();
+  }
+
   removeFilters() {
+    console.log('instant grid component - removeFilters');
     this.columns.forEach(col => {
       col.removeFilter();
     });
   }
 
   reload() {
+    console.log('instant grid component - reload');
     this.columns.forEach((col,index) => {
       if (index === 0) {
         col.removeFilter();

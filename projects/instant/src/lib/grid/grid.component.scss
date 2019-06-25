@@ -107,3 +107,13 @@
         fill: #1d1d1b;
     }
 }
+
+.filter-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.filter-radio-button {
+  margin: 5px;
+}
