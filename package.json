@@ -9,6 +9,7 @@
     "build:lib": "ng build --prod --project=instant && cp -r projects/instant/src/assets dist/instant/assets",
     "build:lib:dev": "ng build --project=instant && cp -r projects/instant/src/assets dist/instant/assets",
     "build:lib:watch": "watch \"yarn build:lib:dev\" projects/instant/src/lib",
+    "pkbump": "sh bump.sh",
     "pkpublish": "yarn pkunlink & sh publish-dist.sh",
     "test": "ng test",
     "lint": "ng lint",
