@@ -100,6 +100,33 @@ export class GridComponent implements AfterContentInit, OnDestroy {
       .forEach(c => (c.filterOpen = false));
   }
 
+  menuOpened(col: ColumnDirective) {
+    if (!col) {
+      return;
+    }
+
+    let filterInput: HTMLElement = null;
+
+    switch (col.templateName) {
+      case ColumnDirective.DEFAULT_FILTER_TEMPLATE:
+        filterInput = document.getElementById('defaultFilterInput');
+        break;
+      case ColumnDirective.DATE_FILTER_TEMPLATE:
+        filterInput = document.getElementById('dateFilterInput');
+        break;
+      default:
+        break;
+    }
+
+    if (!filterInput) {
+      return;
+    }
+
+    setTimeout(() => {
+      filterInput.focus();
+    }, 500);
+  }
+
   checkClose($event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
     if ($event.key === 'Enter') {
       menuTrigger.closeMenu();
