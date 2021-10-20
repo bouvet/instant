@@ -54,7 +54,7 @@
                 </button>
               </mat-form-field>
               <mat-form-field class="no-padding">
-                <input matInput type="number" placeholder="global.label.number-of-days" tabindex="3" (click)="$event.stopPropagation()" [value]="getDays(col)" (change)="onDaysChange($event, col)">
+                <input matInput type="number" placeholder="Days" tabindex="3" (click)="$event.stopPropagation()" [value]="getDays(col)" (change)="onDaysChange($event, col)">
               </mat-form-field>
               <mat-radio-group class="filter-radio-group" [(ngModel)]="col.operator">
                 <mat-radio-button class="filter-radio-button" *ngFor="let operator of col.operators" [value]="operator" (change)="onOperatorChange(operator, col)">{{operator}}</mat-radio-button>
