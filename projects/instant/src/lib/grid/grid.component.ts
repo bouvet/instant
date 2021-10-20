@@ -142,13 +142,15 @@ export class GridComponent implements AfterContentInit, OnDestroy {
   }
 
   onFromDateChange($event, col) {
-    console.log('instant grid component - onFromDateChange ');
     col.setFromDate($event ? $event.target.value : null);
   }
 
   onToDateChange($event, col) {
-    console.log('instant grid component - onToDateChange ');
     col.setToDate($event ? $event.target.value : null);
+  }
+
+  onDaysChange($event, col) {
+    col.setDays($event ? $event.target.value : null);
   }
 
   getFilterValue(col) {
@@ -179,6 +181,29 @@ export class GridComponent implements AfterContentInit, OnDestroy {
     return null;
   }
 
+  toNumber(value: any): number {
+    if (value == null) {
+      return null;
+    }
+
+    const type: string = typeof(value);
+
+    switch (type) {
+      case 'string':
+        const stringValue = value.replace(',', '.');
+        if (!stringValue || Number.isNaN(+stringValue)) {
+          return null;
+        }
+        const n: number = +stringValue;
+        return n;
+      case 'number':
+        return value;
+      case 'boolean':
+        return (value === true) ? 1 : 0;
+      default:
+        return null;
+    }
+  }
 
   getFromDate(col): Date {
     if (col.filterValue) {
@@ -198,6 +223,17 @@ export class GridComponent implements AfterContentInit, OnDestroy {
         return date;
       }
       return new Date(col.filterValue);
+    }
+    return null;
+  }
+
+  getDays(col): number {
+    if (col.filterValue) {
+      if (typeof col.filterValue === 'object') {
+        const days: number = this.toNumber(col.filterValue.days);
+        return days;
+      }
+      return this.toNumber(col.filterValue);
     }
     return null;
   }

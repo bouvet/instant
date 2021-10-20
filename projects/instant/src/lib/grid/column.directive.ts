@@ -147,6 +147,21 @@ export class ColumnDirective implements OnInit {
     this.filterOpen = false;
   }
 
+  setDays(days: number) {
+    if (this.templateName !== 'dateFilterTemplate') {
+      return;
+    }
+
+    const filter: any = this.filterValue ? this.filterValue : new DateFilterOption();
+    filter.attribute = this.attribute;
+    filter.lookupAttribute = this.lookupAttribute;
+    filter.lookupEntity = this.lookupEntity;
+    filter.operator = this.operator;
+    filter.dataType = this.dataType;
+    filter.days = days;
+    this.setFilterValue(filter);
+  }
+
   setFromDate(date: Date) {
     if (this.templateName !== 'dateFilterTemplate') {
       return;
