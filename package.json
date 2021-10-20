@@ -1,6 +1,6 @@
 {
   "name": "instant",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -34,10 +34,10 @@
     "@angular/platform-browser-dynamic": "^7.0.2",
     "@angular/router": "^7.0.2",
     "core-js": "^2.5.7",
-    "rxjs": "^6.3.3",
-    "zone.js": "^0.8.26",
     "element-closest": "^2.0.2",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "rxjs": "^6.3.3",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.4",
