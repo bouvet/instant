@@ -80,7 +80,7 @@ export class ColumnDirective implements OnInit {
     // Set default operator list (if not already set)
     switch (this.templateName) {
       case ColumnDirective.DEFAULT_FILTER_TEMPLATE:
-        this.operators = this.operators ? this.operators : ['CONTAINS', 'STARTS_WITH', 'ENDS_WITH', 'EQUALS', 'NOT_EQUALS', 'IS_NULL', 'IS_NOT_NULL'];
+        this.operators = this.operators ? this.operators : ['CONTAINS', 'STARTS_WITH', 'ENDS_WITH', 'EQUALS', 'NOT_EQUALS', 'MATCH_WORDS', 'IS_NULL', 'IS_NOT_NULL'];
         this.operator = this.operator ? this.operator : 'CONTAINS';
         break;
       case ColumnDirective.DATE_FILTER_TEMPLATE:
