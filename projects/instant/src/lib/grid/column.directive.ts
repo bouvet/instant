@@ -20,6 +20,7 @@ export interface ColumnFilter {
  * 23.06.2019 ofsfrvor - Added dateFilterTemplate. Activate dateFilterTemplate by setting input member templateName.
  * 24.06.2019 ofsfrvor - If dataType is Long, Integer or BigDecimal, set input field type to number. Set default dataType to String.
  *                       Using moment to convert dateString to date object.
+ * 22.02.2022 ofsfrvor - Added boolean input members ignoreCase and upperCase.
  *
  * TODO Automatically force cursor to input field when template is opened
  * TODO Need to implement language translation for the operator labels.
@@ -48,6 +49,8 @@ export class ColumnDirective implements OnInit {
   @Input() lookupEntity: string;
   @Input() dataType: string = 'String';
   @Input() operator: string;
+  @Input() ignoreCase: boolean;
+  @Input() upperCase: boolean;
 
   // Template refs
   @ContentChild('filter') filterRef: TemplateRef<any>;
@@ -110,6 +113,8 @@ export class ColumnDirective implements OnInit {
         this.lookupEntity = filter.hasOwnProperty('lookupEntity') && filter.lookupEntity && filter.lookupEntity !== this.lookupEntity ? filter.lookupEntity : this.lookupEntity;
         this.operator = filter.hasOwnProperty('operator') && filter.operator && filter.operator !== this.operator ? filter.operator : this.operator;
         this.dataType = filter.hasOwnProperty('dataType') && filter.dataType && filter.dataType !== this.dataType ? filter.dataType : this.dataType;
+        this.ignoreCase = filter.hasOwnProperty('ignoreCase') && filter.ignoreCase && filter.ignoreCase !== this.ignoreCase ? filter.ignoreCase : this.ignoreCase;
+        this.upperCase = filter.hasOwnProperty('upperCase') && filter.upperCase && filter.upperCase !== this.upperCase ? filter.upperCase : this.upperCase;
       } else {
         // Filter is primitive => convert to default filter option
         filter = this.convertPrimitiveToFilter(filter);
@@ -130,6 +135,8 @@ export class ColumnDirective implements OnInit {
     filter.operator = this.operator;
     filter.key = key;
     filter.dataType = this.dataType;
+    filter.ignoreCase = this.ignoreCase;
+    filter.upperCase = this.upperCase;
 
     return filter;
   }
@@ -158,6 +165,8 @@ export class ColumnDirective implements OnInit {
     filter.lookupEntity = this.lookupEntity;
     filter.operator = this.operator;
     filter.dataType = this.dataType;
+    filter.ignoreCase = this.ignoreCase;
+    filter.upperCase = this.upperCase;
     filter.days = days;
     this.setFilterValue(filter);
   }
@@ -173,6 +182,8 @@ export class ColumnDirective implements OnInit {
     filter.lookupEntity = this.lookupEntity;
     filter.operator = this.operator;
     filter.dataType = this.dataType;
+    filter.ignoreCase = this.ignoreCase;
+    filter.upperCase = this.upperCase;
     filter.fromDate = this.toDbDateString(date);
     this.setFilterValue(filter);
   }
@@ -188,6 +199,8 @@ export class ColumnDirective implements OnInit {
     filter.lookupEntity = this.lookupEntity;
     filter.operator = this.operator;
     filter.dataType = this.dataType;
+    filter.ignoreCase = this.ignoreCase;
+    filter.upperCase = this.upperCase;
     filter.toDate = this.toDbDateString(date);
     this.setFilterValue(filter);
   }
